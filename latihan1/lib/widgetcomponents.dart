@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ReuseTextField extends StatelessWidget {
   final String label;
@@ -6,6 +7,7 @@ class ReuseTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool? obscureText, readOnly;
   final GestureTapCallback? onTap;
+  final bool isNUmber;
 
   const ReuseTextField({
     super.key,
@@ -15,6 +17,7 @@ class ReuseTextField extends StatelessWidget {
     this.marginTop,
     this.onTap,
     this.readOnly,
+    required this.isNUmber,
   });
 
   @override
@@ -30,6 +33,9 @@ class ReuseTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        inputFormatters: isNUmber
+            ? [FilteringTextInputFormatter.digitsOnly]
+            : [],
         obscureText: obscureText ?? false,
         readOnly: readOnly ?? false,
         onTap: onTap,
@@ -123,7 +129,7 @@ class CustomButton extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFF1976D2),
+          backgroundColor: Color.fromARGB(255, 75, 5, 107),
           foregroundColor: Colors.white,
           elevation: 4,
           shadowColor: Colors.black26,

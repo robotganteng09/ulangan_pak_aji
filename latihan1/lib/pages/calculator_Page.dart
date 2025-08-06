@@ -24,11 +24,13 @@ class CalculatorPage extends StatelessWidget {
             ReuseTextField(
               label: "Enter First Number",
               controller: calculatorController.txtangka1,
+              isNUmber: true,
             ),
             ReuseTextField(
               label: "Enter Second Number",
               controller: calculatorController.txtangka2,
               obscureText: false,
+              isNUmber: true,
             ),
 
             const SizedBox(height: 16),

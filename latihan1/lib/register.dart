@@ -47,12 +47,21 @@ class RegisterPageState extends State<RegisterPage> {
               ),
             ),
 
-            ReuseTextField(label: "Enter Gmail", controller: gmailController),
-            ReuseTextField(label: "Enter Name", controller: namaController),
+            ReuseTextField(
+              label: "Enter Gmail",
+              controller: gmailController,
+              isNUmber: false,
+            ),
+            ReuseTextField(
+              label: "Enter Name",
+              controller: namaController,
+              isNUmber: false,
+            ),
             ReuseTextField(
               label: "Enter Password",
               controller: passwordController,
               obscureText: true,
+              isNUmber: false,
             ),
 
             const SizedBox(height: 16),
