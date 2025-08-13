@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:latihan1/widgetcomponents.dart';
+import 'package:latihan1/widgets/widgetcomponents.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

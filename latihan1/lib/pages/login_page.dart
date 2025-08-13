@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:latihan1/register.dart';
-import 'package:latihan1/widgetcomponents.dart';
+import 'package:latihan1/widgets/widgetcomponents.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

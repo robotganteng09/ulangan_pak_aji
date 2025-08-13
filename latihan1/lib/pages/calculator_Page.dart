@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latihan1/controllers/calculator_controller.dart';
-import 'package:latihan1/widgetcomponents.dart';
+import 'package:latihan1/routes/routes.dart';
+import 'package:latihan1/widgets/widgetcomponents.dart';
 
 class CalculatorPage extends StatelessWidget {
   CalculatorPage({super.key});
@@ -93,9 +94,11 @@ class CalculatorPage extends StatelessWidget {
               child: SizedBox(
                 width: 200,
                 child: CustomButton(
-                  text: "Clear",
+                  text: "football",
                   margin: 0,
-                  onPressed: calculatorController.clear,
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.FootballPage);
+                  },
                 ),
               ),
             ),
