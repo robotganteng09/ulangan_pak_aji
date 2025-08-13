@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:latihan1/pages/calculator_Page.dart';
-import 'package:latihan1/pages/login_page.dart';
 import 'package:latihan1/routes/pages.dart';
 import 'package:latihan1/routes/routes.dart';
 
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      initialRoute: AppRoutes.FootballPage,
+      initialRoute: AppRoutes.CalculatorPage,
       getPages: AppPages.pages,
     );
   }
