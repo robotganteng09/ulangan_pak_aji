@@ -94,10 +94,10 @@ class CalculatorPage extends StatelessWidget {
               child: SizedBox(
                 width: 200,
                 child: CustomButton(
-                  text: "football",
+                  text: "Clear",
                   margin: 0,
                   onPressed: () {
-                    Get.toNamed(AppRoutes.FootballPage);
+                    calculatorController.clear();
                   },
                 ),
               ),

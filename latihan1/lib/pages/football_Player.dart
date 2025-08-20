@@ -24,9 +24,7 @@ class FootballPlayer extends StatelessWidget {
               return ListTile(
                 leading: Image.asset(player.imageAsset, width: 50, height: 50),
                 title: Text(player.name),
-                subtitle: Text(
-                  player.position + "  Number " + player.number.toString(),
-                ),
+                subtitle: Text("${player.position}  Number ${player.number}"),
                 onTap: () {
                   Get.toNamed(AppRoutes.footballeditor, arguments: index);
                 },
