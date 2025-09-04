@@ -6,7 +6,7 @@ class LoginController extends GetxController {
   final txtUser = TextEditingController();
   final txtPassword = TextEditingController();
 
-  final user = "Arsya123";
+  final user = "admin";
   final password = "12345";
 
   void login() {
