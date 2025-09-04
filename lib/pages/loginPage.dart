@@ -9,9 +9,6 @@ class Loginpage extends StatelessWidget {
   LoginController logincontroller = Get.put(LoginController());
   Loginpage({super.key});
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +18,6 @@ class Loginpage extends StatelessWidget {
           child: Column(
             children: [
               // Image.asset("assets/image/img1.jpeg"),
-
               ReuseTextField(
                 label: "nama",
                 controller: logincontroller.txtUser,
@@ -29,9 +25,13 @@ class Loginpage extends StatelessWidget {
               ),
               SizedBox(height: 24),
 
-              ReuseTextField(label: "password", controller: logincontroller.txtPassword, isNUmber: true),
-              SizedBox(height: 20,),
-              CustomButton(text: "LOGIN",onPressed: logincontroller.login),
+              ReuseTextField(
+                label: "password",
+                controller: logincontroller.txtPassword,
+                isNUmber: true,
+              ),
+              SizedBox(height: 20),
+              CustomButton(text: "LOGIN", onPressed: logincontroller.login),
             ],
           ),
         ),
