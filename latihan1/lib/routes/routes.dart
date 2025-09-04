@@ -4,4 +4,5 @@ class AppRoutes {
   static const String footballeditor = "/footbaleditor";
   static const String profilePage = "/profilepage";
   static const String bottomNav = "/bottomnav";
+  static const String navdrawer = "/navdrawer";
 }

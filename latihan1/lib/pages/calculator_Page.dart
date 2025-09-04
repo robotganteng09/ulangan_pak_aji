@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latihan1/controllers/calculator_controller.dart';
-import 'package:latihan1/routes/routes.dart';
 import 'package:latihan1/widgets/widgetcomponents.dart';
 
 class CalculatorPage extends StatelessWidget {
   CalculatorPage({super.key});
 
-  final CalculatorController calculatorController = Get.put(
-    CalculatorController(),
-  );
+  // final CalculatorController calculatorController = Get.put(
+  //   CalculatorController(),
+  // );
+  final calculatorController = Get.find<CalculatorController>();
 
   @override
   Widget build(BuildContext context) {
