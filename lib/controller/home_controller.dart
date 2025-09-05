@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/listArray.dart';
 
 class HomeController extends GetxController {
   var todolist = <ToDoLIst>[].obs;
+  HistoryController historyController = Get.put(HistoryController());
 
   void UpdateList(
     int index,
@@ -13,6 +15,9 @@ class HomeController extends GetxController {
     todolist[index].Title = newtitle;
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
+    if (newisDone) {
+      historyController.addHistory(todolist[index]);
+    }
     todolist.refresh();
   }
 

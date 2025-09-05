@@ -3,5 +3,6 @@ class AppRoutes {
   static const String Homepage = "/HomePage";
   static const String Addpage = "/AddPage";
   static const String Editpage = "/EditPage";
-  static const String Navbar = "/Navbar";
+  static const String Profillepage = "/ProfilePge";
+  static const String Dashboard = "/Dashboard";
 }
