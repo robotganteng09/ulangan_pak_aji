@@ -5,7 +5,7 @@ import 'package:ulangan_pak_aji/controller/dashboard_controller.dart';
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
 
-  DashboardController dashboardController = Get.put(DashboardController());
+  final dashboardController = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
