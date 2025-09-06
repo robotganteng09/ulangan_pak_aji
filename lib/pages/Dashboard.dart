@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:ulangan_pak_aji/controller/dashboard_controller.dart';
 
 class Dashboard extends StatelessWidget {
@@ -14,7 +11,6 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-       
         body:
             dashboardController.pages[dashboardController.selectedIndex.value],
         bottomNavigationBar: BottomNavigationBar(
@@ -22,9 +18,11 @@ class Dashboard extends StatelessWidget {
           onTap: dashboardController.changeTab,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.history), label: "history"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: "history",
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),
-    
           ],
         ),
       ),
