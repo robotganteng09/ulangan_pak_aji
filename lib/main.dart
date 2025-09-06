@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ulangan_pak_aji/pages/loginPage.dart';
 import 'package:ulangan_pak_aji/routes/pages.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
 
