@@ -14,7 +14,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    final homecontroller = Get.put(HomeController());
+    final homeController = Get.find<HomeController>();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Your to do list"), centerTitle: true),
@@ -26,9 +26,9 @@ class _HomepageState extends State<Homepage> {
             Expanded(
               child: Obx(
                 () => ListView.builder(
-                  itemCount: homecontroller.todolist.length,
+                  itemCount: homeController.todolist.length,
                   itemBuilder: (context, index) {
-                    final todo = homecontroller.todolist[index];
+                    final todo = homeController.todolist[index];
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(
@@ -78,7 +78,7 @@ class _HomepageState extends State<Homepage> {
                                     value: todo.isDone,
                                     onChanged: (value) {
                                       if (value != null) {
-                                        homecontroller.UpdateList(
+                                        homeController.UpdateList(
                                           index,
                                           todo.Title,
                                           todo.Description,

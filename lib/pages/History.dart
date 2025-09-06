@@ -5,7 +5,8 @@ import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/cardReusable.dart';
 
 class History extends StatelessWidget {
-  final HistoryController historyController = Get.put(HistoryController());
+  final historyController = Get.find<HistoryController>();
+
   History({super.key});
 
   @override
