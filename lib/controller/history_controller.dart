@@ -9,4 +9,8 @@ class HistoryController extends GetxController {
       completedList.add(todo);
     }
   }
+
+  void deleteHistory(ToDoLIst todo) {
+    completedList.remove(todo);
+  }
 }
