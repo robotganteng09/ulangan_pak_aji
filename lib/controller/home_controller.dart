@@ -12,11 +12,18 @@ class HomeController extends GetxController {
     String newDescription,
     bool newisDone,
   ) {
+    bool wasDone = todolist[index].isDone;
     todolist[index].Title = newtitle;
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
-    if (newisDone) {
+
+
+    todolist[index].isDone = newisDone;
+
+    if (newisDone && !wasDone) {
       historyController.addHistory(todolist[index]);
+    } else if (!newisDone && wasDone) {
+      historyController.deleteHistory(todolist[index]);
     }
     todolist.refresh();
   }
@@ -26,6 +33,7 @@ class HomeController extends GetxController {
       Get.snackbar("Gagal", "Semua field harus diisi!");
       return;
     }
+
     todolist.add(
       ToDoLIst(
         Title: title,
