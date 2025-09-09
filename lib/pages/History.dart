@@ -6,7 +6,7 @@ import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/cardReusable.dart';
 
 class History extends StatelessWidget {
- final HistoryController historyController = Get.put(HistoryController());
+  final HistoryController historyController = Get.put(HistoryController());
   History({super.key});
 
   @override
@@ -16,14 +16,14 @@ class History extends StatelessWidget {
       body: Obx(() {
         if (historyController.completedList.isEmpty) {
           return const Center(child: Text("Belum ada todo"));
-        }
+
+     }
         return ListView.builder(
           itemCount: historyController.completedList.length,
           itemBuilder: (context, index) {
-            final todo = historyController.completedList[index];
             return TodoCard(
-              title: todo.Title,
-              description: todo.Description,
+              title: historyController.completedList[index].Title,
+              description: historyController.completedList[index].Description,
               isDone: true,
             );
           },
