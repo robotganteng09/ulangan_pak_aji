@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/dropdown_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
+import 'package:ulangan_pak_aji/widgets/dropDown.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -12,9 +14,11 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final categoryController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
+    final dropdownController = Get.find<DropdownController>();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Your to do list"), centerTitle: true),
@@ -89,6 +93,28 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                   Text(
                                     todo.isDone ? "Selesai" : "Belum Selesai",
+                                  ),
+                                  Obx(
+                                    () => DropdownReusable<String>(
+                                      items: dropdownController.options,
+                                      value:
+                                          dropdownController
+                                              .selectedValue
+                                              .value
+                                              .isEmpty
+                                          ? null
+                                          : dropdownController
+                                                .selectedValue
+                                                .value,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          dropdownController.setSelected(value);
+                                          categoryController.text = value;
+                                          value; // simpan juga ke textfield
+                                        }
+                                      },
+                                      itemLabel: (item) => item,
+                                    ),
                                   ),
                                 ],
                               ),

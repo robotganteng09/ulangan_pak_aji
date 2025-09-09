@@ -17,7 +17,6 @@ class HomeController extends GetxController {
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
 
-
     todolist[index].isDone = newisDone;
 
     if (newisDone && !wasDone) {
