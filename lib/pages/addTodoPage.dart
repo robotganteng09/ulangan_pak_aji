@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
+import 'package:ulangan_pak_aji/widgets/dropDown.dart';
 
 class AddPage extends StatelessWidget {
   AddPage({super.key});
@@ -9,6 +10,8 @@ class AddPage extends StatelessWidget {
   final titleController = TextEditingController();
   final descController = TextEditingController();
   final categoryController = TextEditingController();
+  String? selectedValue;
+  final List<String> options = ["Flutter", "React", "Vue", "Angular"];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,20 @@ class AddPage extends StatelessWidget {
               controller: categoryController,
               decoration: const InputDecoration(labelText: "Category"),
             ),
+
             const SizedBox(height: 20),
+            DropdownReusable<String>(
+              items: options,
+              value: selectedValue,
+              onChanged: (value) {
+                (() {
+                  selectedValue = value;
+                  categoryController.text = value ?? ""; // simpan ke controller
+                });
+              },
+              itemLabel: (item) => item,
+            ),
+
             CustomButton(
               text: "Save",
               onPressed: () {

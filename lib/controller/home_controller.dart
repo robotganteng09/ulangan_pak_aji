@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/dropdown_controller.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/listArray.dart';
 
 class HomeController extends GetxController {
   var todolist = <ToDoLIst>[].obs;
   HistoryController historyController = Get.put(HistoryController());
+  DropdownController dropdownController = Get.put(DropdownController());
 
   void UpdateList(
     int index,
@@ -16,7 +18,6 @@ class HomeController extends GetxController {
     todolist[index].Title = newtitle;
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
-
 
     todolist[index].isDone = newisDone;
 
@@ -42,5 +43,6 @@ class HomeController extends GetxController {
         isDone: false,
       ),
     );
+    dropdownController.selectedValue.value = ""; // reset setelah add
   }
 }
