@@ -42,4 +42,9 @@ class HomeController extends GetxController {
       ),
     );
   }
+
+   void updateCategory(int index, String newCategory) {
+    todolist[index].category = newCategory;
+    todolist.refresh();
+  }
 }
