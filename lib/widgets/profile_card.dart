@@ -13,78 +13,117 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      // kotak ijo
       child: Container(
-        width: 280,
-        height: 350,
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.green[300],
-          borderRadius: BorderRadius.circular(15),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // titik putih
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Profile image contain
-            Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(imagePath, fit: BoxFit.cover),
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            // Username text
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Username",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                Container(
-                  width: 300,
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    username,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+        margin: const EdgeInsets.symmetric(vertical: 14),
+        child: ClipPath(
+          clipper: BannerClipper(),
+          child: Container(
+            width: 280,
+            height: 340,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(color: const Color(0xFFccff00), width: 1.5),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFccff00).withOpacity(0.3),
+                  blurRadius: 12,
+                  spreadRadius: 2,
                 ),
               ],
             ),
-          ],
+            child: Stack(
+              children: [
+                // Icon checklist kanan atas
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Icon(
+                    Icons.check_circle,
+                    color: const Color(0xFFccff00),
+                    size: 26,
+                  ),
+                ),
+
+                // Konten tengah
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Avatar
+                    Container(
+                      width: 115,
+                      height: 115,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xFFccff00),
+                          width: 2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFccff00).withOpacity(0.4),
+                            blurRadius: 15,
+                            spreadRadius: 3,
+                          ),
+                        ],
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(imagePath, fit: BoxFit.cover),
+                      ),
+                    ),
+
+                    const SizedBox(height: 18),
+
+                    // Username
+                    Text(
+                      username,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Subtext
+                    const Text(
+                      "Kata kata hari ini",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 13,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
+}
+
+class BannerClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double radius = 16.0;
+    Path path = Path()
+      ..moveTo(0, radius)
+      ..quadraticBezierTo(0, 0, radius, 0)
+      ..lineTo(size.width - radius, 0)
+      ..quadraticBezierTo(size.width, 0, size.width, radius)
+      ..lineTo(size.width, size.height - 45)
+      ..lineTo(size.width / 2, size.height)
+      ..lineTo(0, size.height - 45)
+      ..lineTo(0, radius);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

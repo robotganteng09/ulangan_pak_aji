@@ -4,12 +4,16 @@ class CustomButton extends StatelessWidget {
   final String text;
   final double? margin;
   final VoidCallback? onPressed;
+  final Color? backgroundColor;
+  final Color? textColor;
 
   const CustomButton({
     super.key,
     required this.text,
     this.margin = 20.0,
     this.onPressed,
+    this.backgroundColor,
+    this.textColor,
   });
 
   @override
@@ -20,10 +24,8 @@ class CustomButton extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 75, 5, 107),
-          foregroundColor: Colors.white,
-          elevation: 4,
-          shadowColor: Colors.black26,
+          backgroundColor: backgroundColor ?? Colors.blue,
+          foregroundColor: textColor ?? Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

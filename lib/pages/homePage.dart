@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
-
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
-import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
+import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -15,21 +14,42 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final categoryController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final dropdownC = Get.find<DropDownController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Your to do list"), centerTitle: true),
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Row(
           children: [
-            const SizedBox(height: 10),
-            Expanded(
-              child: Obx(
-                () => ListView.builder(
+            Text(
+              "Your Activities",
+              style: TextStyle(
+                color: AppColors.neon,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+            const SizedBox(width: 5),
+          ],
+        ),
+      ),
+      body: Container(
+        margin: const EdgeInsets.all(5),
+        child: Obx(
+          () => homeController.todolist.isEmpty
+              ? Center(
+                  child: Text(
+                    "No activities yet",
+                    style: TextStyle(color: AppColors.textGrey, fontSize: 16),
+                  ),
+                )
+              : ListView.builder(
                   itemCount: homeController.todolist.length,
                   itemBuilder: (context, index) {
                     final todo = homeController.todolist[index];
@@ -41,13 +61,14 @@ class _HomepageState extends State<Homepage> {
                         );
                       },
                       child: Card(
+                        color: Colors.grey[850],
                         margin: const EdgeInsets.symmetric(
                           vertical: 8,
                           horizontal: 8,
                         ),
-                        elevation: 3,
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -56,39 +77,52 @@ class _HomepageState extends State<Homepage> {
                             children: [
                               Text(
                                 todo.Title,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 18,
+                                  color: AppColors.neon,
                                 ),
                               ),
-                              const SizedBox(height: 8),
+
                               Text(
                                 todo.Description,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "Category: ${todo.category}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: AppColors.textLight,
                                 ),
                               ),
+
+                              Text(
+                                "Category: ${todo.category}",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.textGrey,
+                                ),
+                              ),
+
                               Text(
                                 todo.dueDate != null
                                     ? "Due Date: ${todo.dueDate!.day}/${todo.dueDate!.month}/${todo.dueDate!.year}"
                                     : "No due date",
-                                style: const TextStyle(
-                                  fontSize: 14,
+                                style: TextStyle(
+                                  fontSize: 12,
                                   color: Colors.redAccent,
                                   fontStyle: FontStyle.italic,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+
                               Row(
                                 children: [
-                                  const Text("Status: "),
+                                  Text(
+                                    "Status: ",
+                                    style: TextStyle(
+                                      color: AppColors.textLight,
+                                      fontSize: 14,
+                                    ),
+                                  ),
                                   Checkbox(
+                                    activeColor: AppColors.neon,
+                                    checkColor: Colors.black,
                                     value: todo.isDone,
                                     onChanged: (value) {
                                       if (value != null) {
@@ -105,6 +139,10 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                   Text(
                                     todo.isDone ? "Selesai" : "Belum Selesai",
+                                    style: TextStyle(
+                                      color: AppColors.textGrey,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -115,16 +153,14 @@ class _HomepageState extends State<Homepage> {
                     );
                   },
                 ),
-              ),
-            ),
-            CustomButton(
-              text: "Add list",
-              onPressed: () {
-                Get.toNamed(AppRoutes.Addpage);
-              },
-            ),
-          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.neon,
+        child: const Icon(Icons.add, color: Colors.black, size: 28),
+        onPressed: () {
+          Get.toNamed(AppRoutes.Addpage);
+        },
       ),
     );
   }

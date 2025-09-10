@@ -1,5 +1,3 @@
-// lib/pages/profille_page.dart
-
 import 'package:flutter/material.dart';
 import '../widgets/profile_card.dart';
 
@@ -9,27 +7,30 @@ class Profillepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // page background
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(9.0),
+              padding: const EdgeInsets.all(12.0),
               child: Row(
                 children: const [
                   Text(
                     "Profile",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFccff00),
+                    ),
                   ),
-                  SizedBox(width: 5),
-                  Icon(Icons.check_box, size: 24),
                 ],
               ),
             ),
 
             Expanded(
               child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Column(
                   children: const [
                     ProfileCard(
