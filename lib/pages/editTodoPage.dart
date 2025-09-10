@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
-import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 import 'package:ulangan_pak_aji/controller/editController.dart';
+import 'package:ulangan_pak_aji/widgets/app_colors.dart';
+import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 
 class EditTodoPage extends StatefulWidget {
   const EditTodoPage({super.key});
@@ -15,94 +18,134 @@ class EditTodoPage extends StatefulWidget {
 class _EditTodoPageState extends State<EditTodoPage> {
   String? selectedValue;
   DateTime? selectedDate;
+  final dateController = TextEditingController();
 
-  final Color background = const Color(0xFF161617);
-  final Color neon = const Color(0xFFDBFE2C);
+  late EditTodoController editController;
+  late HomeController homeC;
+  late DropDownController dropdownc;
+  late int index;
+  late dynamic todo;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
     final args = Get.arguments as Map<String, dynamic>;
-    final int index = args['index'];
-    final dynamic todo = args['todo'];
+    index = args['index'];
+    todo = args['todo'];
 
-    final editController = Get.put(EditTodoController());
-    final homeC = Get.find<HomeController>();
-    final dropdownc = Get.find<DropDownController>();
+    // Controllers
+    editController = Get.put(EditTodoController());
+    homeC = Get.find<HomeController>();
+    dropdownc = Get.find<DropDownController>();
 
-    // set awal
+    // Set initial values
     editController.setTodo(index, todo);
     selectedValue = todo.category;
     selectedDate = todo.dueDate;
 
-    return Scaffold(
-      backgroundColor: background,
-      appBar: AppBar(
-        backgroundColor: background,
-        elevation: 0,
-      
-        title: Text(
-          "Edit Activities",
-          style: TextStyle(color: neon, fontWeight: FontWeight.bold),
+    if (selectedDate != null) {
+      dateController.text =
+          "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}";
+    }
+  }
+
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        selectedDate = picked;
+        dateController.text = "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
+  }
+
+  Widget _buildTextField(String label, TextEditingController controller) {
+    return ReuseTextField(
+      label: label,
+      controller: controller,
+      isNUmber: false,
+      fillColor: AppColors.textLight,
+      borderColor: AppColors.neon,
+      textColor: AppColors.background,
+      labelColor: AppColors.textGrey,
+    );
+  }
+
+  Widget _buildButton({
+    required String text,
+    required Color color,
+    required VoidCallback onPressed,
+    Color textColor = AppColors.background,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14),
         ),
-        centerTitle: false,
-       
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: const Text(
+          "Edit Activities",
+          style: TextStyle(color: AppColors.neon, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Title
-            ReuseTextField(
-              label: "Title",
-              controller: editController.titleController,
-              isNUmber: false,
-              fillColor: Colors.white,
-              borderColor: neon,
-              textColor: Colors.black,
-              labelColor: Colors.black54,
-            ),
+            // Title & Desc
+            _buildTextField("Title", editController.titleController),
             const SizedBox(height: 16),
-
-            // Desc
-            ReuseTextField(
-              label: "Desc",
-              controller: editController.descController,
-              isNUmber: false,
-              fillColor: Colors.white,
-              borderColor: neon,
-              textColor: Colors.black,
-              labelColor: Colors.black54,
-            ),
+            _buildTextField("Desc", editController.descController),
             const SizedBox(height: 16),
 
             // Due Date
             TextField(
+              controller: dateController,
               readOnly: true,
-              onTap: () async {
-                final picked = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate ?? DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                );
-                if (picked != null) {
-                  setState(() {
-                    selectedDate = picked;
-                  });
-                }
-              },
+              onTap: _pickDate,
               decoration: InputDecoration(
                 labelText: "Due Date",
                 hintText: "d/m/y",
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.textLight,
+                labelStyle: const TextStyle(color: AppColors.neon),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide.none,
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
             // Dropdown
             Obx(
@@ -110,37 +153,38 @@ class _EditTodoPageState extends State<EditTodoPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: Colors.white, width: 2),
+                    bottom: BorderSide(color: AppColors.textLight, width: 2),
                   ),
                 ),
                 child: DropdownButton<String>(
-                  dropdownColor: background,
+                  dropdownColor: AppColors.background,
                   value: dropdownc.selectedValue.value.isEmpty
                       ? selectedValue
                       : dropdownc.selectedValue.value,
                   hint: const Text(
                     "Pilih Kategori",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.textLight),
                   ),
                   isExpanded: true,
                   underline: const SizedBox(),
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.textLight,
+                  ),
                   items: dropdownc.pilihan
                       .map(
                         (item) => DropdownMenuItem(
                           value: item,
                           child: Text(
                             item,
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: AppColors.textLight),
                           ),
                         ),
                       )
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {
-                      setState(() {
-                        selectedValue = value;
-                      });
+                      setState(() => selectedValue = value);
                       dropdownc.setSelected(value);
                     }
                   },
@@ -160,70 +204,43 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         editController.isDone.value = value;
                       }
                     },
-                    activeColor: neon,
+                    activeColor: AppColors.neon,
+
+                    checkColor: AppColors.background,
                   ),
                 ),
-                const Text("Sudah", style: TextStyle(color: Colors.white)),
+                const Text(
+                  "Sudah",
+                  style: TextStyle(color: AppColors.textLight),
+                ),
               ],
             ),
-
             const SizedBox(height: 24),
 
-            // Update Button (putih)
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                onPressed: () {
-                  homeC.UpdateList(
-                    index,
-                    editController.titleController.text,
-                    editController.descController.text,
-                    editController.isDone.value,
-                    selectedValue ?? todo.category,
-                    selectedDate,
-                  );
-                  Get.back();
-                },
-                child: const Text(
-                  "Update",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
+            // Update Button
+            _buildButton(
+              text: "Update",
+              color: AppColors.textLight,
+              textColor: AppColors.background,
+              onPressed: () {
+                homeC.UpdateList(
+                  index,
+                  editController.titleController.text,
+                  editController.descController.text,
+                  editController.isDone.value,
+                  selectedValue ?? todo.category,
+                  selectedDate,
+                );
+                Get.back();
+              },
             ),
             const SizedBox(height: 12),
 
-            // Delete Button (merah)
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                onPressed: editController.deleteTodo,
-                child: const Text(
-                  "Delete",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
+            _buildButton(
+              text: "Delete",
+              color: AppColors.red,
+              textColor: AppColors.textLight,
+              onPressed: editController.deleteTodo,
             ),
           ],
         ),

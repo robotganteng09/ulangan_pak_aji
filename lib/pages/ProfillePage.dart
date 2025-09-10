@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/profile_card.dart';
+import '/widgets/profile_card.dart';
+import '/widgets/app_colors.dart';
 
 class Profillepage extends StatelessWidget {
   const Profillepage({super.key});
@@ -7,7 +8,7 @@ class Profillepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,13 +22,12 @@ class Profillepage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFccff00),
+                      color: AppColors.neon,
                     ),
                   ),
                 ],
               ),
             ),
-
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -37,7 +37,6 @@ class Profillepage extends StatelessWidget {
                       username: "Narendra/20/XI PPLG 2",
                       imagePath: "assets/image/naren.jpg",
                       subtext: "saya manusia,makan nasi",
-                       
                     ),
                     ProfileCard(
                       username: "Arsya/9/IX PPLG 2",
