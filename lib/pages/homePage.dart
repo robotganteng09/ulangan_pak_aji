@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ulangan_pak_aji/controller/dropdown_controller.dart';
+import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
+
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
@@ -18,7 +19,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
-    final dropdownController = Get.find<DropdownController>();
+    final dropdownC = Get.find<DropDownController>();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Your to do list"), centerTitle: true),
@@ -94,29 +95,32 @@ class _HomepageState extends State<Homepage> {
                                   Text(
                                     todo.isDone ? "Selesai" : "Belum Selesai",
                                   ),
-                                  Obx(
-                                    () => DropdownReusable<String>(
-                                      items: dropdownController.options,
-                                      value:
-                                          dropdownController
-                                              .selectedValue
-                                              .value
-                                              .isEmpty
-                                          ? null
-                                          : dropdownController
-                                                .selectedValue
-                                                .value,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          dropdownController.setSelected(value);
-                                          categoryController.text = value;
-                                          value; // simpan juga ke textfield
-                                        }
-                                      },
-                                      itemLabel: (item) => item,
-                                    ),
-                                  ),
                                 ],
+                              ),
+                              Obx(
+                                () => DropdownButton<String>(
+                                  value: dropdownC.selectedValue.value.isEmpty
+                                      ? null
+                                      : dropdownC.selectedValue.value,
+                                  hint: const Text('Pilih kategori'),
+                                  items: dropdownC.pilihan
+                                      .map(
+                                        (item) => DropdownMenuItem(
+                                          value: item,
+                                          child: Text(item),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      dropdownC.setSelected(value);
+                                      homeController.updateCategory(
+                                        index,
+                                        value,
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
                             ],
                           ),

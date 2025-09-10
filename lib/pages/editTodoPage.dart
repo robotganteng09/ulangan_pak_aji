@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/controller/editController.dart';
 
-class EditTodoPage extends StatelessWidget {
+class EditTodoPage extends StatefulWidget {
+
   const EditTodoPage({super.key});
+  
 
   @override
+  State<EditTodoPage> createState() => _EditTodoPageState();
+}
+
+class _EditTodoPageState extends State<EditTodoPage> {
+  String? selectedValue;
+  @override
   Widget build(BuildContext context) {
+    
     final args = Get.arguments as Map<String, dynamic>;
     final int index = args['index'];
     final dynamic todo = args['todo'];
 
     final editController = Get.put(EditTodoController());
+    final dropdownc = Get.find<DropDownController>();
     editController.setTodo(index, todo);
 
     return Scaffold(
@@ -53,6 +64,29 @@ class EditTodoPage extends StatelessWidget {
                 Obx(
                   () => Text(
                     editController.isDone.value ? "Selesai" : "Belum Selesai",
+                  ),
+                ),
+
+                Obx(
+                  () => DropdownButton<String>(
+                    value: dropdownc.selectedValue.value.isEmpty
+                        ? null
+                        : dropdownc.selectedValue.value,
+                    hint: const Text('Pilih kategori'),
+                    items: dropdownc.pilihan
+                        .map(
+                          (item) =>
+                              DropdownMenuItem(value: item, child: Text(item)),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedValue= value;
+                        });
+                        dropdownc.setSelected(value);
+                      }
+                    },
                   ),
                 ),
               ],

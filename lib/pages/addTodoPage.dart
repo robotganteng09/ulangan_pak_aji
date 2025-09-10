@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/widgets/dropDown.dart';
 
-class AddPage extends StatelessWidget {
+class AddPage extends StatefulWidget {
   AddPage({super.key});
 
+  @override
+  State<AddPage> createState() => _AddPageState();
+}
+
+class _AddPageState extends State<AddPage> {
   final titleController = TextEditingController();
+
   final descController = TextEditingController();
+
   final categoryController = TextEditingController();
+
   String? selectedValue;
-  final List<String> options = ["Flutter", "React", "Vue", "Angular"];
 
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
+    final dropdown = Get.find<DropDownController>();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Add New Todo")),
@@ -32,23 +41,34 @@ class AddPage extends StatelessWidget {
               controller: descController,
               decoration: const InputDecoration(labelText: "Description"),
             ),
-            const SizedBox(height: 12),
             TextField(
               controller: categoryController,
-              decoration: const InputDecoration(labelText: "Category"),
+              decoration: const InputDecoration(labelText: "Description"),
             ),
+            const SizedBox(height: 12),
 
             const SizedBox(height: 20),
-            DropdownReusable<String>(
-              items: options,
-              value: selectedValue,
-              onChanged: (value) {
-                (() {
-                  selectedValue = value;
-                  categoryController.text = value ?? ""; // simpan ke controller
-                });
-              },
-              itemLabel: (item) => item,
+            Obx(
+              () => DropdownButton<String>(
+                value: dropdown.selectedValue.value.isEmpty
+                    ? null
+                    : dropdown.selectedValue.value,
+                hint: const Text('Pilih kategori'),
+                items: dropdown.pilihan
+                    .map(
+                      (item) =>
+                          DropdownMenuItem(value: item, child: Text(item)),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedValue = value;
+                    });
+                    dropdown.setSelected(value);
+                  }
+                },
+              ),
             ),
 
             CustomButton(
