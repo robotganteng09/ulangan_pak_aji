@@ -4,7 +4,6 @@ import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 
-
 class AddPage extends StatefulWidget {
   AddPage({super.key});
 
@@ -14,12 +13,10 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   final titleController = TextEditingController();
-
   final descController = TextEditingController();
 
-  final categoryController = TextEditingController();
-
   String? selectedValue;
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +38,15 @@ class _AddPageState extends State<AddPage> {
               controller: descController,
               decoration: const InputDecoration(labelText: "Description"),
             ),
-            
-            const SizedBox(height: 12),
-
             const SizedBox(height: 20),
+
+            // Dropdown
             Obx(
               () => DropdownButton<String>(
                 value: dropdown.selectedValue.value.isEmpty
                     ? null
                     : dropdown.selectedValue.value,
-                hint: const Text('Pilih Status'),
+                hint: const Text('Pilih Kategori'),
                 items: dropdown.pilihan
                     .map(
                       (item) =>
@@ -67,6 +63,42 @@ class _AddPageState extends State<AddPage> {
                 },
               ),
             ),
+            const SizedBox(height: 20),
+
+            // Date picker
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    selectedDate != null
+                        ? "Due Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}"
+                        : "No due date selected",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.redAccent,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: selectedDate ?? DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) {
+                      setState(() {
+                        selectedDate = picked;
+                      });
+                    }
+                  },
+                  child: const Text("Pilih Tanggal"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
 
             CustomButton(
               text: "Save",
@@ -74,8 +106,8 @@ class _AddPageState extends State<AddPage> {
                 homeController.addList(
                   titleController.text,
                   descController.text,
-                 
                   selectedValue ?? "",
+                  selectedDate,
                 );
                 Get.back();
               },

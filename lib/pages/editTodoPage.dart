@@ -15,6 +15,8 @@ class EditTodoPage extends StatefulWidget {
 
 class _EditTodoPageState extends State<EditTodoPage> {
   String? selectedValue;
+  DateTime? selectedDate;
+
   @override
   Widget build(BuildContext context) {
     final args = Get.arguments as Map<String, dynamic>;
@@ -24,7 +26,11 @@ class _EditTodoPageState extends State<EditTodoPage> {
     final editController = Get.put(EditTodoController());
     final homeC = Get.find<HomeController>();
     final dropdownc = Get.find<DropDownController>();
+
+    // set awal
     editController.setTodo(index, todo);
+    selectedValue = todo.category;
+    selectedDate = todo.dueDate;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Edit Todo")),
@@ -37,13 +43,15 @@ class _EditTodoPageState extends State<EditTodoPage> {
               controller: editController.titleController,
               isNUmber: false,
             ),
+
             ReuseTextField(
               label: "Description",
               controller: editController.descController,
               isNUmber: false,
             ),
-            
+
             const SizedBox(height: 16),
+
             Row(
               children: [
                 Obx(
@@ -61,34 +69,86 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     editController.isDone.value ? "Selesai" : "Belum Selesai",
                   ),
                 ),
+              ],
+            ),
 
-                Obx(
-                  () => DropdownButton<String>(
-                    value: dropdownc.selectedValue.value.isEmpty
-                        ? null
-                        : dropdownc.selectedValue.value,
-                    hint: const Text('Pilih Status'),
-                    items: dropdownc.pilihan
-                        .map(
-                          (item) =>
-                              DropdownMenuItem(value: item, child: Text(item)),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                        dropdownc.setSelected(value);
-                        homeC.updateCategory(index, value);
-                      }
-                    },
+            const SizedBox(height: 16),
+
+            Obx(
+              () => DropdownButton<String>(
+                value: dropdownc.selectedValue.value.isEmpty
+                    ? selectedValue
+                    : dropdownc.selectedValue.value,
+                hint: const Text('Pilih Kategori'),
+                items: dropdownc.pilihan
+                    .map(
+                      (item) =>
+                          DropdownMenuItem(value: item, child: Text(item)),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedValue = value;
+                    });
+                    dropdownc.setSelected(value);
+                  }
+                },
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    selectedDate != null
+                        ? "Due Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}"
+                        : "No due date selected",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.redAccent,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: selectedDate ?? DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) {
+                      setState(() {
+                        selectedDate = picked;
+                      });
+                    }
+                  },
+                  child: const Text("Pilih Tanggal"),
                 ),
               ],
             ),
+
             const SizedBox(height: 24),
-            CustomButton(text: "Update", onPressed: editController.updateTodo),
+
+            CustomButton(
+              text: "Update",
+              onPressed: () {
+                homeC.UpdateList(
+                  index,
+                  editController.titleController.text,
+                  editController.descController.text,
+                  editController.isDone.value,
+                  selectedValue ?? todo.category,
+                  selectedDate,
+                );
+                Get.back();
+              },
+            ),
+
             CustomButton(
               text: "Delete",
               margin: 12,

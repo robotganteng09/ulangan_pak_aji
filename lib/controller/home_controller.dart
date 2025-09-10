@@ -5,21 +5,25 @@ import 'package:ulangan_pak_aji/widgets/listArray.dart';
 
 class HomeController extends GetxController {
   var todolist = <ToDoLIst>[].obs;
+
   HistoryController historyController = Get.put(HistoryController());
   DropDownController dropDownController = Get.find<DropDownController>();
+
   void UpdateList(
     int index,
     String newtitle,
     String newDescription,
     bool newisDone,
     String newCategory,
+    DateTime? newDueDate,
   ) {
     bool wasDone = todolist[index].isDone;
+
     todolist[index].Title = newtitle;
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
-
-    todolist[index].isDone = newisDone;
+    todolist[index].category = newCategory;
+    todolist[index].dueDate = newDueDate;
 
     if (newisDone && !wasDone) {
       historyController.addHistory(todolist[index]);
@@ -30,7 +34,12 @@ class HomeController extends GetxController {
     todolist.refresh();
   }
 
-  void addList(String title, String description, String category) {
+  void addList(
+    String title,
+    String description,
+    String category,
+    DateTime? dueDate,
+  ) {
     if (title.isEmpty || description.isEmpty || category.isEmpty) {
       Get.snackbar("Gagal", "Semua field harus diisi!");
       return;
@@ -42,9 +51,10 @@ class HomeController extends GetxController {
         Description: description,
         category: category,
         isDone: false,
+        dueDate: dueDate,
       ),
     );
-        dropDownController.setSelected("");
+    dropDownController.setSelected("");
   }
 
   void updateCategory(int index, String newCategory) {
