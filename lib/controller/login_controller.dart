@@ -11,7 +11,7 @@ class LoginController extends GetxController {
 
   void login() {
     if (txtUser.text == user && txtPassword.text == password) {
-      Get.toNamed(AppRoutes.Dashboard);
+      Get.offNamed(AppRoutes.Dashboard);
     } else {
       Get.snackbar("Login Gagal", "password salaah");
     }

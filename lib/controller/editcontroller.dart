@@ -26,6 +26,7 @@ class EditTodoController extends GetxController {
       titleController.text,
       descController.text,
       isDone.value,
+       categoryController.text,
     );
     homeController.todolist[index].category = categoryController.text;
     Get.back();

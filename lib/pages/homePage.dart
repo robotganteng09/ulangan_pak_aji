@@ -88,6 +88,7 @@ class _HomepageState extends State<Homepage> {
                                           todo.Title,
                                           todo.Description,
                                           value,
+                                          todo.category
                                         );
                                       }
                                     },
@@ -97,31 +98,7 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                 ],
                               ),
-                              Obx(
-                                () => DropdownButton<String>(
-                                  value: dropdownC.selectedValue.value.isEmpty
-                                      ? null
-                                      : dropdownC.selectedValue.value,
-                                  hint: const Text('Pilih kategori'),
-                                  items: dropdownC.pilihan
-                                      .map(
-                                        (item) => DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      dropdownC.setSelected(value);
-                                      homeController.updateCategory(
-                                        index,
-                                        value,
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
+                             
                             ],
                           ),
                         ),

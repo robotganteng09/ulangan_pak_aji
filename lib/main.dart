@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: mainBinding(),
-      initialRoute: AppRoutes.Dashboard,
+      initialRoute: AppRoutes.Loginpage,
       getPages: AppPage.pages,
     );
   }
