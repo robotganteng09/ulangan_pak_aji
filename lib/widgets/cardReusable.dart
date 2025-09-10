@@ -4,6 +4,7 @@ class TodoCard extends StatelessWidget {
   final String title;
   final String description;
   final bool isDone;
+  final Widget? trailing; 
   final VoidCallback? onTap;
 
   const TodoCard({
@@ -12,6 +13,7 @@ class TodoCard extends StatelessWidget {
     required this.description,
     this.isDone = false,
     this.onTap,
+    this.trailing
   });
 
   @override
@@ -26,6 +28,7 @@ class TodoCard extends StatelessWidget {
           isDone ? Icons.check_circle : Icons.radio_button_unchecked,
           color: isDone ? Colors.green : Colors.grey,
         ),
+        trailing: trailing,
         title: Text(
           title,
           style: TextStyle(
@@ -38,6 +41,7 @@ class TodoCard extends StatelessWidget {
           style: TextStyle(
             decoration: isDone ? TextDecoration.lineThrough : null,
           ),
+          
         ),
       ),
     );

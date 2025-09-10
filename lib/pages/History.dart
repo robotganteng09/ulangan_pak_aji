@@ -21,10 +21,20 @@ class History extends StatelessWidget {
           itemCount: historyController.completedList.length,
           itemBuilder: (context, index) {
             final todo = historyController.completedList[index];
-            return TodoCard(
-              title: todo.Title,
-              description: todo.Description,
-              isDone: true,
+            return Column(
+              children: [
+                TodoCard(
+                  title: todo.Title,
+                  description: todo.Description,
+                  isDone: true,
+                  trailing: IconButton(
+                    onPressed: () {
+                      historyController.deleteHistory(todo);
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
+                ),
+              ],
             );
           },
         );
