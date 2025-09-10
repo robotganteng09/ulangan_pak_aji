@@ -36,10 +36,13 @@ class Profillepage extends StatelessWidget {
                     ProfileCard(
                       username: "Narendra/20/XI PPLG 2",
                       imagePath: "assets/image/naren.jpg",
+                      subtext: "saya manusia,makan nasi",
+                       
                     ),
                     ProfileCard(
                       username: "Arsya/9/IX PPLG 2",
                       imagePath: "assets/image/arsya.jpg",
+                      subtext: "Gua mah ganteng",
                     ),
                   ],
                 ),

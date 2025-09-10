@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ProfileCard extends StatelessWidget {
   final String username;
   final String imagePath;
+  final String subtext;
 
   const ProfileCard({
     super.key,
     required this.username,
     required this.imagePath,
+    this.subtext = "kata kta"
   });
 
   @override
@@ -46,58 +48,62 @@ class ProfileCard extends StatelessWidget {
                 ),
 
                 // Konten tengah
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Avatar
-                    Container(
-                      width: 115,
-                      height: 115,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color(0xFFccff00),
-                          width: 2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFccff00).withOpacity(0.4),
-                            blurRadius: 15,
-                            spreadRadius: 3,
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Avatar
+                      Container(
+                        alignment: Alignment.center,
+                        width: 115,
+                        height: 115,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFFccff00),
+                            width: 2,
                           ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFccff00).withOpacity(0.4),
+                              blurRadius: 15,
+                              spreadRadius: 3,
+                            ),
+                          ],
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(imagePath, fit: BoxFit.cover),
+                        ),
                       ),
-                      child: ClipOval(
-                        child: Image.asset(imagePath, fit: BoxFit.cover),
+
+                      const SizedBox(height: 18),
+
+                      // Username
+                      Text(
+                        username,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
 
-                    const SizedBox(height: 18),
+                      const SizedBox(height: 8),
 
-                    // Username
-                    Text(
-                      username,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                      // Subtext
+                      Text(
+                        subtext,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 13,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    // Subtext
-                    const Text(
-                      "Kata kata hari ini",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 13,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

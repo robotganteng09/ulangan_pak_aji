@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
-import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/controller/editController.dart';
 
 class EditTodoPage extends StatefulWidget {
@@ -16,6 +15,9 @@ class EditTodoPage extends StatefulWidget {
 class _EditTodoPageState extends State<EditTodoPage> {
   String? selectedValue;
   DateTime? selectedDate;
+
+  final Color background = const Color(0xFF161617);
+  final Color neon = const Color(0xFFDBFE2C);
 
   @override
   Widget build(BuildContext context) {
@@ -33,25 +35,121 @@ class _EditTodoPageState extends State<EditTodoPage> {
     selectedDate = todo.dueDate;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Todo")),
+      backgroundColor: background,
+      appBar: AppBar(
+        backgroundColor: background,
+        elevation: 0,
+      
+        title: Text(
+          "Edit Activities",
+          style: TextStyle(color: neon, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: false,
+       
+      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
+            // Title
             ReuseTextField(
               label: "Title",
               controller: editController.titleController,
               isNUmber: false,
+              fillColor: Colors.white,
+              borderColor: neon,
+              textColor: Colors.black,
+              labelColor: Colors.black54,
             ),
-
-            ReuseTextField(
-              label: "Description",
-              controller: editController.descController,
-              isNUmber: false,
-            ),
-
             const SizedBox(height: 16),
 
+            // Desc
+            ReuseTextField(
+              label: "Desc",
+              controller: editController.descController,
+              isNUmber: false,
+              fillColor: Colors.white,
+              borderColor: neon,
+              textColor: Colors.black,
+              labelColor: Colors.black54,
+            ),
+            const SizedBox(height: 16),
+
+            // Due Date
+            TextField(
+              readOnly: true,
+              onTap: () async {
+                final picked = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate ?? DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                );
+                if (picked != null) {
+                  setState(() {
+                    selectedDate = picked;
+                  });
+                }
+              },
+              decoration: InputDecoration(
+                labelText: "Due Date",
+                hintText: "d/m/y",
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Dropdown
+            Obx(
+              () => Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.white, width: 2),
+                  ),
+                ),
+                child: DropdownButton<String>(
+                  dropdownColor: background,
+                  value: dropdownc.selectedValue.value.isEmpty
+                      ? selectedValue
+                      : dropdownc.selectedValue.value,
+                  hint: const Text(
+                    "Pilih Kategori",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  isExpanded: true,
+                  underline: const SizedBox(),
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                  items: dropdownc.pilihan
+                      .map(
+                        (item) => DropdownMenuItem(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedValue = value;
+                      });
+                      dropdownc.setSelected(value);
+                    }
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Checkbox
             Row(
               children: [
                 Obx(
@@ -62,97 +160,70 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         editController.isDone.value = value;
                       }
                     },
+                    activeColor: neon,
                   ),
                 ),
-                Obx(
-                  () => Text(
-                    editController.isDone.value ? "Selesai" : "Belum Selesai",
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            Obx(
-              () => DropdownButton<String>(
-                value: dropdownc.selectedValue.value.isEmpty
-                    ? selectedValue
-                    : dropdownc.selectedValue.value,
-                hint: const Text('Pilih Kategori'),
-                items: dropdownc.pilihan
-                    .map(
-                      (item) =>
-                          DropdownMenuItem(value: item, child: Text(item)),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      selectedValue = value;
-                    });
-                    dropdownc.setSelected(value);
-                  }
-                },
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    selectedDate != null
-                        ? "Due Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}"
-                        : "No due date selected",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.redAccent,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: selectedDate ?? DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                    );
-                    if (picked != null) {
-                      setState(() {
-                        selectedDate = picked;
-                      });
-                    }
-                  },
-                  child: const Text("Pilih Tanggal"),
-                ),
+                const Text("Sudah", style: TextStyle(color: Colors.white)),
               ],
             ),
 
             const SizedBox(height: 24),
 
-            CustomButton(
-              text: "Update",
-              onPressed: () {
-                homeC.UpdateList(
-                  index,
-                  editController.titleController.text,
-                  editController.descController.text,
-                  editController.isDone.value,
-                  selectedValue ?? todo.category,
-                  selectedDate,
-                );
-                Get.back();
-              },
+            // Update Button (putih)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                onPressed: () {
+                  homeC.UpdateList(
+                    index,
+                    editController.titleController.text,
+                    editController.descController.text,
+                    editController.isDone.value,
+                    selectedValue ?? todo.category,
+                    selectedDate,
+                  );
+                  Get.back();
+                },
+                child: const Text(
+                  "Update",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
             ),
+            const SizedBox(height: 12),
 
-            CustomButton(
-              text: "Delete",
-              margin: 12,
-              onPressed: editController.deleteTodo,
+            // Delete Button (merah)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                onPressed: editController.deleteTodo,
+                child: const Text(
+                  "Delete",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
