@@ -9,6 +9,7 @@ class EditTodoController extends GetxController {
   late TextEditingController categoryController;
   late int index;
   RxBool isDone = false.obs;
+  Rx<DateTime?> dueDate = Rx<DateTime?>(null);
 
   final homeController = Get.find<HomeController>();
 
@@ -18,6 +19,7 @@ class EditTodoController extends GetxController {
     descController = TextEditingController(text: todo.Description);
     categoryController = TextEditingController(text: todo.category);
     isDone.value = todo.isDone;
+    dueDate.value = todo.dueDate;
   }
 
   void updateTodo() {
@@ -26,7 +28,8 @@ class EditTodoController extends GetxController {
       titleController.text,
       descController.text,
       isDone.value,
-       categoryController.text,
+      categoryController.text,
+      dueDate.value,
     );
     homeController.todolist[index].category = categoryController.text;
     Get.back();

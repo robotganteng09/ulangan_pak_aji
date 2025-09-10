@@ -6,7 +6,6 @@ import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
 
-
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -75,6 +74,16 @@ class _HomepageState extends State<Homepage> {
                                   color: Colors.grey,
                                 ),
                               ),
+                              Text(
+                                todo.dueDate != null
+                                    ? "Due Date: ${todo.dueDate!.day}/${todo.dueDate!.month}/${todo.dueDate!.year}"
+                                    : "No due date",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.redAccent,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
                               const SizedBox(height: 12),
                               Row(
                                 children: [
@@ -88,7 +97,8 @@ class _HomepageState extends State<Homepage> {
                                           todo.Title,
                                           todo.Description,
                                           value,
-                                          todo.category
+                                          todo.category,
+                                          todo.dueDate,
                                         );
                                       }
                                     },
@@ -98,7 +108,6 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                 ],
                               ),
-                             
                             ],
                           ),
                         ),
