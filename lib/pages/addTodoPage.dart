@@ -41,10 +41,7 @@ class _AddPageState extends State<AddPage> {
               controller: descController,
               decoration: const InputDecoration(labelText: "Description"),
             ),
-            TextField(
-              controller: categoryController,
-              decoration: const InputDecoration(labelText: "Description"),
-            ),
+            
             const SizedBox(height: 12),
 
             const SizedBox(height: 20),
@@ -53,7 +50,7 @@ class _AddPageState extends State<AddPage> {
                 value: dropdown.selectedValue.value.isEmpty
                     ? null
                     : dropdown.selectedValue.value,
-                hint: const Text('Pilih kategori'),
+                hint: const Text('Pilih Status'),
                 items: dropdown.pilihan
                     .map(
                       (item) =>
@@ -77,7 +74,8 @@ class _AddPageState extends State<AddPage> {
                 homeController.addList(
                   titleController.text,
                   descController.text,
-                  categoryController.text,
+                 
+                  selectedValue ?? "",
                 );
                 Get.back();
               },

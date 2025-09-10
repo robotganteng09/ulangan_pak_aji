@@ -11,12 +11,14 @@ class HomeController extends GetxController {
     String newtitle,
     String newDescription,
     bool newisDone,
+     String newCategory,
+    
   ) {
     bool wasDone = todolist[index].isDone;
     todolist[index].Title = newtitle;
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
-
+    
     todolist[index].isDone = newisDone;
 
     if (newisDone && !wasDone) {
@@ -39,6 +41,7 @@ class HomeController extends GetxController {
         Description: description,
         category: category,
         isDone: false,
+        
       ),
     );
   }

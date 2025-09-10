@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
+import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/controller/editController.dart';
 
 class EditTodoPage extends StatefulWidget {
-
   const EditTodoPage({super.key});
-  
 
   @override
   State<EditTodoPage> createState() => _EditTodoPageState();
@@ -18,12 +17,12 @@ class _EditTodoPageState extends State<EditTodoPage> {
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
-    
     final args = Get.arguments as Map<String, dynamic>;
     final int index = args['index'];
     final dynamic todo = args['todo'];
 
     final editController = Get.put(EditTodoController());
+    final homeC = Get.find<HomeController>();
     final dropdownc = Get.find<DropDownController>();
     editController.setTodo(index, todo);
 
@@ -43,11 +42,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
               controller: editController.descController,
               isNUmber: false,
             ),
-            ReuseTextField(
-              label: "Category",
-              controller: editController.categoryController,
-              isNUmber: false,
-            ),
+            
             const SizedBox(height: 16),
             Row(
               children: [
@@ -72,7 +67,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     value: dropdownc.selectedValue.value.isEmpty
                         ? null
                         : dropdownc.selectedValue.value,
-                    hint: const Text('Pilih kategori'),
+                    hint: const Text('Pilih Status'),
                     items: dropdownc.pilihan
                         .map(
                           (item) =>
@@ -82,9 +77,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
-                          selectedValue= value;
+                          selectedValue = value;
                         });
                         dropdownc.setSelected(value);
+                        homeC.updateCategory(index, value);
                       }
                     },
                   ),
