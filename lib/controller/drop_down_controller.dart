@@ -5,7 +5,7 @@ class DropDownController extends GetxController {
 
   var selectedValue = ''.obs;
 
-  final List<String> pilihan = ['complate', 'progress', 'pending'];
+  final List<String> pilihan = ['Sangat Penting', 'Penting', 'bisa nanti'];
 
   void setSelected(String value) {
     selectedValue.value = value;
