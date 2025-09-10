@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
+import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class AddPage extends StatefulWidget {
-  AddPage({super.key});
+  const AddPage({super.key});
 
   @override
   State<AddPage> createState() => _AddPageState();
@@ -13,12 +14,10 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
+  final dateController = TextEditingController();
 
   String? selectedValue;
   DateTime? selectedDate;
-
-  final Color background = const Color(0xFF161617);
-  final Color neon = const Color(0xFFDBFE2C);
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +25,15 @@ class _AddPageState extends State<AddPage> {
     final dropdown = Get.find<DropDownController>();
 
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: background,
+        backgroundColor: AppColors.background,
         elevation: 0,
-      
-        title: Text(
+        title: const Text(
           "Add Activities",
-          style: TextStyle(color: neon, fontWeight: FontWeight.bold),
+          style: TextStyle(color: AppColors.neon, fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
-      
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -46,11 +43,11 @@ class _AddPageState extends State<AddPage> {
             // Title
             TextField(
               controller: titleController,
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(color: AppColors.background),
               decoration: InputDecoration(
                 labelText: "Title",
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.textLight,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
@@ -59,14 +56,14 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-         
+            // Desc
             TextField(
               controller: descController,
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(color: AppColors.background),
               decoration: InputDecoration(
                 labelText: "Desc",
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.textLight,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
@@ -75,8 +72,9 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-           
+            // Due Date
             TextField(
+              controller: dateController,
               readOnly: true,
               onTap: () async {
                 final picked = await showDatePicker(
@@ -88,6 +86,8 @@ class _AddPageState extends State<AddPage> {
                 if (picked != null) {
                   setState(() {
                     selectedDate = picked;
+                    dateController.text =
+                        "${picked.day}/${picked.month}/${picked.year}";
                   });
                 }
               },
@@ -95,7 +95,7 @@ class _AddPageState extends State<AddPage> {
                 labelText: "Due Date",
                 hintText: "d/m/y",
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.textLight,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
@@ -104,34 +104,37 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-       
+            // Dropdown
             Obx(
               () => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: Colors.white, width: 2),
+                    bottom: BorderSide(color: AppColors.textLight, width: 2),
                   ),
                 ),
                 child: DropdownButton<String>(
-                  dropdownColor: background,
+                  dropdownColor: AppColors.background,
                   value: dropdown.selectedValue.value.isEmpty
                       ? null
                       : dropdown.selectedValue.value,
                   hint: const Text(
                     "Pilih Kategori",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.textLight),
                   ),
                   isExpanded: true,
                   underline: const SizedBox(),
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.textLight,
+                  ),
                   items: dropdown.pilihan
                       .map(
                         (item) => DropdownMenuItem(
                           value: item,
                           child: Text(
                             item,
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: AppColors.textLight),
                           ),
                         ),
                       )
@@ -155,7 +158,7 @@ class _AddPageState extends State<AddPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: neon,
+                    backgroundColor: AppColors.neon,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -170,10 +173,10 @@ class _AddPageState extends State<AddPage> {
                     );
                     Get.back();
                   },
-                  child: Text(
+                  child: const Text(
                     "Add",
                     style: TextStyle(
-                      color: background,
+                      color: AppColors.background,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
