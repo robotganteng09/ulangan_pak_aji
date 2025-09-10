@@ -1,28 +1,29 @@
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/listArray.dart';
 
 class HomeController extends GetxController {
   var todolist = <ToDoLIst>[].obs;
   HistoryController historyController = Get.put(HistoryController());
-
+  DropDownController dropDownController = Get.find<DropDownController>();
   void UpdateList(
     int index,
     String newtitle,
     String newDescription,
     bool newisDone,
-     String newCategory,
-    
+    String newCategory,
   ) {
     bool wasDone = todolist[index].isDone;
     todolist[index].Title = newtitle;
     todolist[index].Description = newDescription;
     todolist[index].isDone = newisDone;
-    
+
     todolist[index].isDone = newisDone;
 
     if (newisDone && !wasDone) {
       historyController.addHistory(todolist[index]);
+      todolist.removeAt(index);
     } else if (!newisDone && wasDone) {
       historyController.deleteHistory(todolist[index]);
     }
@@ -41,12 +42,12 @@ class HomeController extends GetxController {
         Description: description,
         category: category,
         isDone: false,
-        
       ),
     );
+        dropDownController.setSelected("");
   }
 
-   void updateCategory(int index, String newCategory) {
+  void updateCategory(int index, String newCategory) {
     todolist[index].category = newCategory;
     todolist.refresh();
   }
