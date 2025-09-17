@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
@@ -16,46 +15,50 @@ class EditTodoPage extends StatefulWidget {
 }
 
 class _EditTodoPageState extends State<EditTodoPage> {
-  String? selectedValue;
-  DateTime? selectedDate;
-  final dateController = TextEditingController();
+  String? selectedValue; //Menyimpan kategori dipilih
+  DateTime? selectedDate; //Menyimpan tanggal
+  final dateController = TextEditingController(); //Controller tanggal
 
+  //Controller variabel todo
   late EditTodoController editController;
   late HomeController homeC;
   late DropDownController dropdownc;
-  late int index;
-  late dynamic todo;
+  late int index; // index todo di list
+  late dynamic todo; // data todo yang diedit
 
   @override
   void initState() {
     super.initState();
 
+    //data dari Get.arguments (dikirim dari halaman sebelumnya)
     final args = Get.arguments as Map<String, dynamic>;
     index = args['index'];
     todo = args['todo'];
 
-    // Controllers
+    //Inisialisasi controller
     editController = Get.put(EditTodoController());
     homeC = Get.find<HomeController>();
     dropdownc = Get.find<DropDownController>();
 
-    // Set initial values
+    // Set data awal ke form
     editController.setTodo(index, todo);
     selectedValue = todo.category;
     selectedDate = todo.dueDate;
 
+    //Format tanggal
     if (selectedDate != null) {
       dateController.text =
           "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}";
     }
   }
 
+  //Fungsi memilih tanggal menggunakan date picker
   Future<void> _pickDate() async {
     final picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      firstDate: DateTime(2000), //tanggal awal
+      lastDate: DateTime(2100), // tanggal akhir
     );
     if (picked != null) {
       setState(() {
@@ -65,6 +68,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
     }
   }
 
+  // Widget custom untuk textfield
   Widget _buildTextField(String label, TextEditingController controller) {
     return ReuseTextField(
       label: label,
@@ -77,6 +81,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
     );
   }
 
+  // Widget custom untuk button
   Widget _buildButton({
     required String text,
     required Color color,
@@ -122,17 +127,19 @@ class _EditTodoPageState extends State<EditTodoPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Title & Desc
+            // Input Judul
             _buildTextField("Title", editController.titleController),
             const SizedBox(height: 16),
+
+            // Input Deskripsi
             _buildTextField("Desc", editController.descController),
             const SizedBox(height: 16),
 
-            // Due Date
+            // Input Due Date (hanya bisa dipilih, tidak diketik manual)
             TextField(
               controller: dateController,
-              readOnly: true,
-              onTap: _pickDate,
+              readOnly: true, // supaya tidak bisa diketik manual
+              onTap: _pickDate, // buka date picker saat ditekan
               decoration: InputDecoration(
                 labelText: "Due Date",
                 hintText: "d/m/y",
@@ -147,7 +154,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
             ),
             const SizedBox(height: 16),
 
-            // Dropdown
+            // Dropdown kategori
             Obx(
               () => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -171,6 +178,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     Icons.arrow_drop_down,
                     color: AppColors.textLight,
                   ),
+                  // Mapping pilihan kategori dari controller
                   items: dropdownc.pilihan
                       .map(
                         (item) => DropdownMenuItem(
@@ -185,7 +193,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   onChanged: (value) {
                     if (value != null) {
                       setState(() => selectedValue = value);
-                      dropdownc.setSelected(value);
+                      dropdownc.setSelected(value); // simpan kategori
                     }
                   },
                 ),
@@ -193,19 +201,18 @@ class _EditTodoPageState extends State<EditTodoPage> {
             ),
             const SizedBox(height: 16),
 
-            // Checkbox
+            // Checkbox untuk status "sudah selesai"
             Row(
               children: [
                 Obx(
                   () => Checkbox(
-                    value: editController.isDone.value,
+                    value: editController.isDone.value, // binding reactive
                     onChanged: (value) {
                       if (value != null) {
                         editController.isDone.value = value;
                       }
                     },
                     activeColor: AppColors.neon,
-
                     checkColor: AppColors.background,
                   ),
                 ),
@@ -217,12 +224,13 @@ class _EditTodoPageState extends State<EditTodoPage> {
             ),
             const SizedBox(height: 24),
 
-            // Update Button
+            // Tombol Update
             _buildButton(
               text: "Update",
               color: AppColors.textLight,
               textColor: AppColors.background,
               onPressed: () {
+                // update data todo di HomeController
                 homeC.UpdateList(
                   index,
                   editController.titleController.text,
@@ -231,16 +239,17 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   selectedValue ?? todo.category,
                   selectedDate,
                 );
-                Get.back();
+                Get.back(); // kembali ke halaman sebelumnya
               },
             ),
             const SizedBox(height: 12),
 
+            // Tombol Delete
             _buildButton(
               text: "Delete",
               color: AppColors.red,
               textColor: AppColors.textLight,
-              onPressed: editController.deleteTodo,
+              onPressed: editController.deleteTodo, // hapus todo
             ),
           ],
         ),

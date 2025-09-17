@@ -12,15 +12,17 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  //inputan
   final titleController = TextEditingController();
   final descController = TextEditingController();
   final dateController = TextEditingController();
 
-  String? selectedValue;
-  DateTime? selectedDate;
+  String? selectedValue; //simpan dropdown
+  DateTime? selectedDate; //simpan tanggal
 
   @override
   Widget build(BuildContext context) {
+    //ambil controller
     final homeController = Get.find<HomeController>();
     final dropdown = Get.find<DropDownController>();
 
@@ -35,12 +37,13 @@ class _AddPageState extends State<AddPage> {
         ),
         centerTitle: false,
       ),
+
+      // isi halaman
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             TextField(
               controller: titleController,
               style: const TextStyle(color: AppColors.background),
@@ -56,7 +59,6 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-            // Desc
             TextField(
               controller: descController,
               style: const TextStyle(color: AppColors.background),
@@ -72,10 +74,9 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-            // Due Date
             TextField(
               controller: dateController,
-              readOnly: true,
+              readOnly: true, //supaya  gak bisa ketik manual
               onTap: () async {
                 final picked = await showDatePicker(
                   context: context,
@@ -104,7 +105,7 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-            // Dropdown
+            //Dropdown
             Obx(
               () => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -130,6 +131,7 @@ class _AddPageState extends State<AddPage> {
                   ),
                   items: dropdown.pilihan
                       .map(
+                        //isi dropdown
                         (item) => DropdownMenuItem(
                           value: item,
                           child: Text(
@@ -142,7 +144,7 @@ class _AddPageState extends State<AddPage> {
                   onChanged: (value) {
                     if (value != null) {
                       setState(() {
-                        selectedValue = value;
+                        selectedValue = value; //simpan dropdown
                       });
                       dropdown.setSelected(value);
                     }
@@ -152,7 +154,7 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 30),
 
-            // Add button
+            // Tombol "Add"
             Center(
               child: SizedBox(
                 width: double.infinity,
@@ -165,13 +167,14 @@ class _AddPageState extends State<AddPage> {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                   onPressed: () {
+                    //ngirim data ke HomeController
                     homeController.addList(
                       titleController.text,
                       descController.text,
                       selectedValue ?? "",
                       selectedDate,
                     );
-                    Get.back();
+                    Get.back(); //nutup add page
                   },
                   child: const Text(
                     "Add",

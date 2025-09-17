@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color neon = Color(0xFFCCFF00);
-  static const Color background = Colors.black;
-  static const Color textLight = Colors.white;
-  static const Color textGrey = Colors.grey;
-  static const Color red = Colors.red;
+  //untuk warna
+  static const Color neon = Color.fromARGB(255, 188, 236, 0);
+  static const Color background = Color.fromARGB(255, 24, 24, 24);
+  static const Color textLight = Color.fromARGB(235, 255, 255, 255);
+  static const Color textGrey = Color.fromARGB(255, 186, 186, 186);
+  static const Color red = Color.fromARGB(180, 244, 67, 54);
 }

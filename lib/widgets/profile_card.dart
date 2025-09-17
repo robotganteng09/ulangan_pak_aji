@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_colors.dart'; // pastikan file AppColors dipanggil
 
 class ProfileCard extends StatelessWidget {
   final String username;
@@ -9,66 +10,68 @@ class ProfileCard extends StatelessWidget {
     super.key,
     required this.username,
     required this.imagePath,
-    this.subtext = "kata kta"
+    this.subtext = "kata kta",
   });
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 14),
+        margin: const EdgeInsets.symmetric(vertical: 16),
         child: ClipPath(
           clipper: BannerClipper(),
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
             width: 280,
             height: 340,
             decoration: BoxDecoration(
-              color: Colors.black,
-              border: Border.all(color: const Color(0xFFccff00), width: 1.5),
-              borderRadius: BorderRadius.circular(16),
+              gradient: const LinearGradient(
+                colors: [AppColors.background, Color(0xFF111111)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              border: Border.all(color: AppColors.neon, width: 1.8),
+              borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFFccff00).withOpacity(0.3),
-                  blurRadius: 12,
-                  spreadRadius: 2,
+                  color: AppColors.neon.withOpacity(0.45),
+                  blurRadius: 18,
+                  spreadRadius: 3,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
             child: Stack(
               children: [
-                // Icon checklist kanan atas
+                // Icon checklist (kanan atas)
                 Positioned(
-                  top: 10,
-                  right: 10,
+                  top: 12,
+                  right: 12,
                   child: Icon(
-                    Icons.check_circle,
-                    color: const Color(0xFFccff00),
-                    size: 26,
+                    Icons.verified_rounded,
+                    color: AppColors.neon,
+                    size: 28,
                   ),
                 ),
 
-                // Konten tengah
+                // Konten utama
                 Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Avatar
                       Container(
-                        alignment: Alignment.center,
-                        width: 115,
-                        height: 115,
+                        width: 120,
+                        height: 120,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            color: const Color(0xFFccff00),
-                            width: 2,
-                          ),
+                          border: Border.all(color: AppColors.neon, width: 2),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFccff00).withOpacity(0.4),
-                              blurRadius: 15,
-                              spreadRadius: 3,
+                              color: AppColors.neon.withOpacity(0.4),
+                              blurRadius: 20,
+                              spreadRadius: 4,
                             ),
                           ],
                         ),
@@ -77,28 +80,29 @@ class ProfileCard extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 20),
 
                       // Username
                       Text(
                         username,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
+                          color: AppColors.textLight,
+                          fontSize: 19,
                           fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
                         ),
                       ),
 
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 10),
 
                       // Subtext
                       Text(
                         subtext,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
+                        style: const TextStyle(
+                          color: AppColors.textGrey,
+                          fontSize: 14,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -117,16 +121,22 @@ class ProfileCard extends StatelessWidget {
 class BannerClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    double radius = 16.0;
+    double radius = 18.0;
     Path path = Path()
       ..moveTo(0, radius)
       ..quadraticBezierTo(0, 0, radius, 0)
       ..lineTo(size.width - radius, 0)
       ..quadraticBezierTo(size.width, 0, size.width, radius)
-      ..lineTo(size.width, size.height - 45)
-      ..lineTo(size.width / 2, size.height)
-      ..lineTo(0, size.height - 45)
-      ..lineTo(0, radius);
+      ..lineTo(size.width, size.height - radius)
+      ..quadraticBezierTo(
+        size.width,
+        size.height,
+        size.width - radius,
+        size.height,
+      )
+      ..lineTo(radius, size.height)
+      ..quadraticBezierTo(0, size.height, 0, size.height - radius)
+      ..close();
     return path;
   }
 
