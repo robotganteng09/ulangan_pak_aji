@@ -6,6 +6,7 @@ class ToDoLIst {
   DateTime? dueDate;
 
   ToDoLIst({
+    //yang dibutuhkan setiap membuat todo list baru
     required this.Title,
     required this.Description,
     required this.isDone,

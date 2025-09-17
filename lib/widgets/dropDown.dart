@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class DropdownReusable<T> extends StatelessWidget {
   final List<T> items; // data untuk dropdown
-  final T? value; // nilai yang dipilih
-  final String hintText; // teks hint
-  final void Function(T?) onChanged; // callback kalau ada perubahan
-  final String Function(T) itemLabel; // cara menampilkan teks item
+  final T? value; // index
+  final String hintText;
+  final void Function(T?) onChanged; // callback ada perubahan
+  final String Function(T) itemLabel; //  menampil item
 
-  DropdownReusable({
+  const DropdownReusable({
     super.key,
     required this.items,
     required this.value,
