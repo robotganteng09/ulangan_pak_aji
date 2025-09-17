@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/widgets/listArray.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 
@@ -9,9 +10,10 @@ class EditTodoController extends GetxController {
   late TextEditingController categoryController;
   late int index;
   RxBool isDone = false.obs;
-  Rx<DateTime?> dueDate = Rx<DateTime?>(null);
+  
 
   final homeController = Get.find<HomeController>();
+  final dateController = Get.find<DateController>();
 
   void setTodo(int idx, ToDoLIst todo) {
     index = idx;
@@ -19,7 +21,10 @@ class EditTodoController extends GetxController {
     descController = TextEditingController(text: todo.Description);
     categoryController = TextEditingController(text: todo.category);
     isDone.value = todo.isDone;
-    dueDate.value = todo.dueDate;
+    dateController.selectedDate.value = todo.dueDate;
+    dateController.dateController.text = todo.dueDate != null
+        ? todo.dueDate!.toIso8601String()
+        : "";
   }
 
   void updateTodo() {
@@ -29,7 +34,7 @@ class EditTodoController extends GetxController {
       descController.text,
       isDone.value,
       categoryController.text,
-      dueDate.value,
+       dateController.selectedDate.value,
     );
     homeController.todolist[index].category = categoryController.text;
     Get.back();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
@@ -14,7 +15,7 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
-  final dateController = TextEditingController();
+  // final dateController = TextEditingController();
 
   String? selectedValue;
   DateTime? selectedDate;
@@ -23,6 +24,7 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final dropdown = Get.find<DropDownController>();
+    final dateC = Get.find<DateController>();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -72,25 +74,10 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(height: 20),
 
-            // Due Date
             TextField(
-              controller: dateController,
+              controller: dateC.dateController,
               readOnly: true,
-              onTap: () async {
-                final picked = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate ?? DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                );
-                if (picked != null) {
-                  setState(() {
-                    selectedDate = picked;
-                    dateController.text =
-                        "${picked.day}/${picked.month}/${picked.year}";
-                  });
-                }
-              },
+              onTap: () => dateC.pickDate(context),
               decoration: InputDecoration(
                 labelText: "Due Date",
                 hintText: "d/m/y",
@@ -100,6 +87,7 @@ class _AddPageState extends State<AddPage> {
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
                 ),
+                suffixIcon: const Icon(Icons.calendar_today),
               ),
             ),
             const SizedBox(height: 20),

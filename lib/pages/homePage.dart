@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
@@ -19,6 +21,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final dropdownC = Get.find<DropDownController>();
+    final dateC = Get.find<DateController>();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -100,11 +103,11 @@ class _HomepageState extends State<Homepage> {
                                 ),
                               ),
 
-                              Text(
+                            Text(
                                 todo.dueDate != null
-                                    ? "Due Date: ${todo.dueDate!.day}/${todo.dueDate!.month}/${todo.dueDate!.year}"
+                                    ? "Due Date: ${DateFormat('d MMMM yyyy').format(todo.dueDate!)}"
                                     : "No due date",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: Colors.redAccent,
                                   fontStyle: FontStyle.italic,

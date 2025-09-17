@@ -2,6 +2,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 
 import 'package:ulangan_pak_aji/controller/dashboard_controller.dart';
+import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
@@ -15,5 +16,6 @@ class mainBinding extends Bindings {
     Get.lazyPut<LoginController>(() => LoginController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<DropDownController>(() => DropDownController());
+    Get.lazyPut<DateController>(() => DateController());
   }
 }

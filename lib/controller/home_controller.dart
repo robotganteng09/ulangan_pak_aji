@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/listArray.dart';
@@ -8,6 +9,7 @@ class HomeController extends GetxController {
 
   HistoryController historyController = Get.put(HistoryController());
   DropDownController dropDownController = Get.find<DropDownController>();
+  DateController dateController = Get.find<DateController>();
 
   void UpdateList(
     int index,
@@ -45,16 +47,19 @@ class HomeController extends GetxController {
       return;
     }
 
+    final DateTime? finalDueDate = dueDate ?? dateController.selectedDate.value;
+
     todolist.add(
       ToDoLIst(
         Title: title,
         Description: description,
         category: category,
         isDone: false,
-        dueDate: dueDate,
+        dueDate: finalDueDate,
       ),
     );
     dropDownController.setSelected("");
+    dateController.clear();
   }
 
   void updateCategory(int index, String newCategory) {
