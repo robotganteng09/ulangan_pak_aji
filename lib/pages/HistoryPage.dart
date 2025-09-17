@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
-import 'package:ulangan_pak_aji/widgets/cardReusable.dart';
 
 class History extends StatelessWidget {
   final historyController = Get.find<HistoryController>();
