@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
+import 'package:ulangan_pak_aji/pages/historyPage.dart';
 import 'package:ulangan_pak_aji/pages/HomePage.dart';
 import 'package:ulangan_pak_aji/pages/ProfillePage.dart';
 

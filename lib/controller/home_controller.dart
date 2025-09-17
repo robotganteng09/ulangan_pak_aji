@@ -8,7 +8,7 @@ class HomeController extends GetxController {
   var todolist = <ToDoLIst>[].obs;
 
   // Controller
-  HistoryController historyController = Get.put(HistoryController());
+  HistoryController historyController = Get.find<HistoryController>();
   DropDownController dropDownController = Get.find<DropDownController>();
 
   // Update todo yang sudah ada

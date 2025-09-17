@@ -5,15 +5,8 @@ import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
-class Homepage extends StatefulWidget {
+class Homepage extends StatelessWidget {
   const Homepage({super.key});
-
-  @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  final categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +76,6 @@ class _HomepageState extends State<Homepage> {
                                   color: AppColors.neon,
                                 ),
                               ),
-
                               Text(
                                 todo.Description,
                                 style: TextStyle(
@@ -91,7 +83,6 @@ class _HomepageState extends State<Homepage> {
                                   color: AppColors.textLight,
                                 ),
                               ),
-
                               Text(
                                 "Category: ${todo.category}",
                                 style: TextStyle(
@@ -99,7 +90,6 @@ class _HomepageState extends State<Homepage> {
                                   color: AppColors.textGrey,
                                 ),
                               ),
-
                               Text(
                                 todo.dueDate != null
                                     ? "Due Date: ${todo.dueDate!.day}/${todo.dueDate!.month}/${todo.dueDate!.year}"
@@ -110,7 +100,6 @@ class _HomepageState extends State<Homepage> {
                                   fontStyle: FontStyle.italic,
                                 ),
                               ),
-
                               Row(
                                 children: [
                                   Text(

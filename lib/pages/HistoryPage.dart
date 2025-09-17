@@ -5,7 +5,7 @@ import 'package:ulangan_pak_aji/controller/history_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class History extends StatelessWidget {
-  final historyController = Get.find<HistoryController>();
+  final HistoryController historyController = Get.find<HistoryController>();
 
   History({super.key});
 
