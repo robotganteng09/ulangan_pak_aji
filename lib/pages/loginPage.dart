@@ -6,7 +6,7 @@ import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 
 class Loginpage extends StatelessWidget {
-  final logincontroller = Get.find<LoginController>();
+  final LoginController logincontroller = Get.find<LoginController>();
   Loginpage({super.key});
 
   @override
@@ -19,8 +19,6 @@ class Loginpage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            
-
               Container(
                 child: Text(
                   "Welcome Back",

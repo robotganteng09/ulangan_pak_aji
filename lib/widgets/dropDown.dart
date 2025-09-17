@@ -7,7 +7,7 @@ class DropdownReusable<T> extends StatelessWidget {
   final void Function(T?) onChanged; // callback kalau ada perubahan
   final String Function(T) itemLabel; // cara menampilkan teks item
 
-  DropdownReusable({
+  const DropdownReusable({
     super.key,
     required this.items,
     required this.value,

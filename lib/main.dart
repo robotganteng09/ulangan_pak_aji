@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ulangan_pak_aji/binding/mainBinding.dart';
 import 'package:ulangan_pak_aji/routes/pages.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
 
@@ -14,7 +13,6 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: mainBinding(),
       initialRoute: AppRoutes.Loginpage,
       getPages: AppPage.pages,
     );
