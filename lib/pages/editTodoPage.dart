@@ -136,7 +136,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                 labelText: "Due Date",
                 hintText: "d/m/y",
                 filled: true,
-                fillColor: AppColors.textLight,
+                fillColor: AppColors.textGrey,
                 labelStyle: const TextStyle(color: AppColors.neon),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),

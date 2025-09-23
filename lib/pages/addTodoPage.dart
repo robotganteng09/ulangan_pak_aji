@@ -13,8 +13,6 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  final titleController = TextEditingController();
-  final descController = TextEditingController();
   // final dateController = TextEditingController();
 
   String? selectedValue;
@@ -44,7 +42,7 @@ class _AddPageState extends State<AddPage> {
           children: [
             // Title
             TextField(
-              controller: titleController,
+              controller: homeController.titleController,
               style: const TextStyle(color: AppColors.background),
               decoration: InputDecoration(
                 labelText: "Title",
@@ -60,7 +58,7 @@ class _AddPageState extends State<AddPage> {
 
             // Desc
             TextField(
-              controller: descController,
+              controller: homeController.descController,
               style: const TextStyle(color: AppColors.background),
               decoration: InputDecoration(
                 labelText: "Desc",
@@ -154,8 +152,8 @@ class _AddPageState extends State<AddPage> {
                   ),
                   onPressed: () {
                     homeController.addList(
-                      titleController.text,
-                      descController.text,
+                      homeController.titleController.text,
+                      homeController.descController.text,
                       selectedValue ?? "",
                       selectedDate,
                     );
