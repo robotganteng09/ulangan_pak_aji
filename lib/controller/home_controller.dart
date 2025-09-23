@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
@@ -6,6 +7,8 @@ import 'package:ulangan_pak_aji/widgets/listArray.dart';
 
 class HomeController extends GetxController {
   var todolist = <ToDoLIst>[].obs;
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
 
   HistoryController historyController = Get.put(HistoryController());
   DropDownController dropDownController = Get.find<DropDownController>();

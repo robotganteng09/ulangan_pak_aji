@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
@@ -12,6 +13,7 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final dropdownC = Get.find<DropDownController>();
+    final dateC = Get.find<DateController>();
 
     return Scaffold(
       backgroundColor: AppColors.background,
