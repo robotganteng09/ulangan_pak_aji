@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
@@ -44,8 +45,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
     selectedDate = todo.dueDate;
 
     if (selectedDate != null) {
-      dateController.text =
-          "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}";
+      dateController.text = DateFormat('d MMMM yyyy').format(selectedDate!);
     }
   }
 
