@@ -99,7 +99,7 @@ class Homepage extends StatelessWidget {
                                     : "No due date",
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  color: Colors.redAccent,
+                                  color: AppColors.neon,
                                   fontStyle: FontStyle.italic,
                                 ),
                               ),
@@ -114,7 +114,7 @@ class Homepage extends StatelessWidget {
                                   ),
                                   Checkbox(
                                     activeColor: AppColors.neon,
-                                    checkColor: Colors.black,
+                                    checkColor: AppColors.background,
                                     value: todo.isDone,
                                     onChanged: (value) {
                                       if (value != null) {

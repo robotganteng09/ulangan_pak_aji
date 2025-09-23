@@ -69,4 +69,11 @@ class HomeController extends GetxController {
     todolist[index].category = newCategory;
     todolist.refresh();
   }
+
+  void clearForm() {
+    titleController.clear();
+    descController.clear();
+    dropDownController.setSelected("");
+    dateController.clear();
+  }
 }

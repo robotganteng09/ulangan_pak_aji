@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
@@ -45,7 +44,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
     selectedDate = todo.dueDate;
 
     if (selectedDate != null) {
-      dateController.text = DateFormat('d MMMM yyyy').format(selectedDate!);
+      dateController.text = editController.formatDate(selectedDate);
     }
   }
 
@@ -59,7 +58,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
     if (picked != null) {
       setState(() {
         selectedDate = picked;
-        dateController.text = "${picked.day}/${picked.month}/${picked.year}";
+        dateController.text = editController.formatDate(picked);
       });
     }
   }
@@ -69,10 +68,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
       label: label,
       controller: controller,
       isNUmber: false,
-      fillColor: AppColors.textLight,
+      fillColor: AppColors.background,
       borderColor: AppColors.neon,
-      textColor: AppColors.background,
-      labelColor: AppColors.textGrey,
+      textColor: AppColors.textLight,
+      labelColor: AppColors.neon,
     );
   }
 
@@ -127,22 +126,17 @@ class _EditTodoPageState extends State<EditTodoPage> {
             _buildTextField("Desc", editController.descController),
             const SizedBox(height: 16),
 
-            // Due Date
-            TextField(
+            ReuseTextField(
+              label: "Due Date",
               controller: dateController,
+              isNUmber: false,
               readOnly: true,
               onTap: _pickDate,
-              decoration: InputDecoration(
-                labelText: "Due Date",
-                hintText: "d/m/y",
-                filled: true,
-                fillColor: AppColors.textGrey,
-                labelStyle: const TextStyle(color: AppColors.neon),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+              hintText: "d/m/y",
+              fillColor: AppColors.background,
+              borderColor: AppColors.neon,
+              textColor: AppColors.textLight,
+              labelColor: AppColors.neon,
             ),
             const SizedBox(height: 16),
 
@@ -152,7 +146,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: AppColors.textLight, width: 2),
+                    bottom: BorderSide(color: AppColors.neon, width: 2),
                   ),
                 ),
                 child: DropdownButton<String>(
@@ -204,7 +198,6 @@ class _EditTodoPageState extends State<EditTodoPage> {
                       }
                     },
                     activeColor: AppColors.neon,
-
                     checkColor: AppColors.background,
                   ),
                 ),
