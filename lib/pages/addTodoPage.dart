@@ -4,6 +4,7 @@ import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
+import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -13,8 +14,6 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  // final dateController = TextEditingController();
-
   String? selectedValue;
   DateTime? selectedDate;
 
@@ -35,58 +34,47 @@ class _AddPageState extends State<AddPage> {
         ),
         centerTitle: false,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Title
-            TextField(
+            ReuseTextField(
+              label: "Title",
               controller: homeController.titleController,
-              style: const TextStyle(color: AppColors.background),
-              decoration: InputDecoration(
-                labelText: "Title",
-                filled: true,
-                fillColor: AppColors.textLight,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+              isNUmber: false,
+              fillColor: AppColors.background,
+              borderColor: AppColors.neon,
+              textColor: AppColors.textLight,
+              labelColor: AppColors.neon,
             ),
             const SizedBox(height: 20),
 
             // Desc
-            TextField(
+            ReuseTextField(
+              label: "Desc",
               controller: homeController.descController,
-              style: const TextStyle(color: AppColors.background),
-              decoration: InputDecoration(
-                labelText: "Desc",
-                filled: true,
-                fillColor: AppColors.textLight,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+              isNUmber: false,
+              fillColor: AppColors.background,
+              borderColor: AppColors.neon,
+              textColor: AppColors.textLight,
+              labelColor: AppColors.neon,
             ),
             const SizedBox(height: 20),
 
-            TextField(
+            // Due Date
+            ReuseTextField(
+              label: "Due Date",
               controller: dateC.dateController,
+              isNUmber: false,
               readOnly: true,
               onTap: () => dateC.pickDate(context),
-              decoration: InputDecoration(
-                labelText: "Due Date",
-                hintText: "d/m/y",
-                filled: true,
-                fillColor: AppColors.textLight,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-                suffixIcon: const Icon(Icons.calendar_today),
-              ),
+              hintText: "d/m/y",
+              fillColor: AppColors.background,
+              borderColor: AppColors.neon,
+              textColor: AppColors.textLight,
+              labelColor: AppColors.neon,
             ),
             const SizedBox(height: 20),
 
@@ -96,7 +84,7 @@ class _AddPageState extends State<AddPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: AppColors.textLight, width: 2),
+                    bottom: BorderSide(color: AppColors.neon, width: 2),
                   ),
                 ),
                 child: DropdownButton<String>(
@@ -127,9 +115,7 @@ class _AddPageState extends State<AddPage> {
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {
-                      setState(() {
-                        selectedValue = value;
-                      });
+                      setState(() => selectedValue = value);
                       dropdown.setSelected(value);
                     }
                   },
@@ -139,33 +125,34 @@ class _AddPageState extends State<AddPage> {
             const SizedBox(height: 30),
 
             // Add button
-            Center(
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.neon,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.neon,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  onPressed: () {
-                    homeController.addList(
-                      homeController.titleController.text,
-                      homeController.descController.text,
-                      selectedValue ?? "",
-                      selectedDate,
-                    );
-                    Get.back();
-                  },
-                  child: const Text(
-                    "Add",
-                    style: TextStyle(
-                      color: AppColors.background,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                onPressed: () {
+                  homeController.addList(
+                    homeController.titleController.text,
+                    homeController.descController.text,
+                    selectedValue ?? "",
+                    dateC.selectedDate.value,
+                  );
+
+                  homeController.clearForm();
+
+                  Get.back();
+                },
+                child: const Text(
+                  "Add",
+                  style: TextStyle(
+                    color: AppColors.background,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

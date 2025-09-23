@@ -3,11 +3,16 @@ import 'package:flutter/services.dart';
 
 class ReuseTextField extends StatelessWidget {
   final String label;
-  final double? marginTop;
   final TextEditingController controller;
-  final bool? obscureText, readOnly;
-  final GestureTapCallback? onTap;
+
   final bool isNUmber;
+  final bool? obscureText;
+  final bool? readOnly;
+  final GestureTapCallback? onTap;
+
+  final String? hintText;
+  final double? marginTop;
+
   final Color? fillColor;
   final Color? borderColor;
   final Color? textColor;
@@ -17,11 +22,12 @@ class ReuseTextField extends StatelessWidget {
     super.key,
     required this.label,
     required this.controller,
-    this.obscureText = false,
-    this.marginTop,
-    this.onTap,
-    this.readOnly,
     required this.isNUmber,
+    this.obscureText = false,
+    this.readOnly,
+    this.onTap,
+    this.hintText,
+    this.marginTop,
     this.fillColor,
     this.borderColor,
     this.textColor,
@@ -45,6 +51,7 @@ class ReuseTextField extends StatelessWidget {
           filled: true,
           fillColor: fillColor ?? Colors.grey[200],
           labelText: label,
+          hintText: hintText,
           labelStyle: TextStyle(color: labelColor ?? Colors.grey),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: borderColor ?? Colors.grey.shade400),
