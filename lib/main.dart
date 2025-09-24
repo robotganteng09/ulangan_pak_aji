@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: AppRoutes.Loginpage,
+      initialRoute: AppRoutes.Splashscreen,
       getPages: AppPage.pages,
     );
   }
