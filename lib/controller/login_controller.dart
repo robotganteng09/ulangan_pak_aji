@@ -10,7 +10,7 @@ class LoginController extends GetxController {
   final user = "admin";
   final password = "12345";
 
-  void login() async {
+  login() async {
     if (txtUser.text == user && txtPassword.text == password) {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("username", txtUser.text.toString());
@@ -18,6 +18,12 @@ class LoginController extends GetxController {
     } else {
       Get.snackbar("Login Gagal", "password salaah");
     }
+  }
+
+  logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("username");
+    Get.offAllNamed(AppRoutes.Splashscreen);
   }
 
   @override
