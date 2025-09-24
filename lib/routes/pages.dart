@@ -4,9 +4,11 @@ import 'package:ulangan_pak_aji/binding/historyBinding.dart';
 
 import 'package:ulangan_pak_aji/binding/homeBinding.dart';
 import 'package:ulangan_pak_aji/binding/loginBinding.dart';
+import 'package:ulangan_pak_aji/binding/splash_binding.dart';
 import 'package:ulangan_pak_aji/pages/Dashboard.dart';
 import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
 import 'package:ulangan_pak_aji/pages/ProfillePage.dart';
+import 'package:ulangan_pak_aji/pages/SplashScreen.dart';
 import 'package:ulangan_pak_aji/pages/addTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/homePage.dart';
@@ -35,5 +37,6 @@ class AppPage {
       bindings: [Dashboardbinding(), Homebinding(), Historybinding()],
     ),
     GetPage(name: AppRoutes.History, page: () => History()),
+    GetPage(name: AppRoutes.Splashscreen, page: () => Splashscreen(),binding: SplashBinding())
   ];
 }
