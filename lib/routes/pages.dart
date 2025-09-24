@@ -30,13 +30,21 @@ class AppPage {
     ),
     GetPage(name: AppRoutes.Addpage, page: () => AddPage()),
     GetPage(name: AppRoutes.Editpage, page: () => EditTodoPage()),
-    GetPage(name: AppRoutes.Profillepage, page: () => Profillepage()),
+    GetPage(
+      name: AppRoutes.Profillepage,
+      page: () => Profillepage(),
+      binding: Loginbinding(),
+    ),
     GetPage(
       name: AppRoutes.Dashboard,
       page: () => Dashboard(),
       bindings: [Dashboardbinding(), Homebinding(), Historybinding()],
     ),
     GetPage(name: AppRoutes.History, page: () => History()),
-    GetPage(name: AppRoutes.Splashscreen, page: () => Splashscreen(),binding: SplashBinding())
+    GetPage(
+      name: AppRoutes.Splashscreen,
+      page: () => Splashscreen(),
+      binding: SplashBinding(),
+    ),
   ];
 }

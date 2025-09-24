@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/dashboard_controller.dart';
+import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
@@ -12,13 +13,13 @@ class Dashboard extends StatelessWidget {
     return Obx(
       () => Scaffold(
         body:
-        dashboardController.pages[dashboardController.selectedIndex.value],
+            dashboardController.pages[dashboardController.selectedIndex.value],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor:  Color(0xFF161617),
+          backgroundColor: Color(0xFF161617),
           currentIndex: dashboardController.selectedIndex.value,
           onTap: dashboardController.changeTab,
-          selectedItemColor: const Color(0xFFDBFE2C),
-          unselectedItemColor: const Color.fromARGB(255, 70, 70, 70),
+          selectedItemColor: AppColors.neon,
+          unselectedItemColor: AppColors.textLight,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(
