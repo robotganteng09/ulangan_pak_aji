@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
 
 class SplashScreenController extends GetxController {
+  @override
   void onInit() {
     super.onInit();
     checkLogin();

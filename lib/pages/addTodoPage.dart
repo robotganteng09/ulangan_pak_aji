@@ -134,7 +134,7 @@ class _AddPageState extends State<AddPage> {
               ),
             ),
 
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
