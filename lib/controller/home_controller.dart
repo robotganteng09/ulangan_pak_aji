@@ -45,11 +45,6 @@ class HomeController extends GetxController {
     String category,
     DateTime? dueDate,
   ) {
-    if (title.isEmpty || description.isEmpty || category.isEmpty) {
-      Get.snackbar("Gagal", "Semua field harus diisi!");
-      return;
-    }
-
     final DateTime? finalDueDate = dueDate ?? dateController.selectedDate.value;
 
     todolist.add(

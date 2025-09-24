@@ -18,6 +18,21 @@ class _AddPageState extends State<AddPage> {
   DateTime? selectedDate;
 
   @override
+  void initState() {
+    super.initState();
+
+    final homeController = Get.find<HomeController>();
+    final dropdown = Get.find<DropDownController>();
+    final dateC = Get.find<DateController>();
+
+    homeController.clearForm();
+    dateC.clear();
+    dropdown.selectedValue.value = "";
+    selectedValue = null;
+    selectedDate = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final dropdown = Get.find<DropDownController>();
@@ -39,7 +54,6 @@ class _AddPageState extends State<AddPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             ReuseTextField(
               label: "Title",
               controller: homeController.titleController,
@@ -49,9 +63,7 @@ class _AddPageState extends State<AddPage> {
               textColor: AppColors.textLight,
               labelColor: AppColors.neon,
             ),
-            const SizedBox(height: 20),
 
-            // Desc
             ReuseTextField(
               label: "Desc",
               controller: homeController.descController,
@@ -60,10 +72,9 @@ class _AddPageState extends State<AddPage> {
               borderColor: AppColors.neon,
               textColor: AppColors.textLight,
               labelColor: AppColors.neon,
+              marginTop: 20,
             ),
-            const SizedBox(height: 20),
 
-            // Due Date
             ReuseTextField(
               label: "Due Date",
               controller: dateC.dateController,
@@ -75,13 +86,13 @@ class _AddPageState extends State<AddPage> {
               borderColor: AppColors.neon,
               textColor: AppColors.textLight,
               labelColor: AppColors.neon,
+              marginTop: 20,
             ),
-            const SizedBox(height: 20),
 
-            // Dropdown
             Obx(
               () => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
+
                 decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(color: AppColors.neon, width: 2),
@@ -122,10 +133,8 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
 
-            // Add button
-            SizedBox(
+            Container(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

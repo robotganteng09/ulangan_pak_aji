@@ -5,7 +5,6 @@ import 'package:ulangan_pak_aji/routes/route.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
-  runApp(const MainApp());
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID', null);
 
