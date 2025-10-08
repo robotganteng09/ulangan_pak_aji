@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/time_controller.dart';
+import 'package:ulangan_pak_aji/controller/wide_controller.dart';
 import 'package:ulangan_pak_aji/routes/pages.dart';
 import 'package:ulangan_pak_aji/routes/route.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -7,7 +9,8 @@ import 'package:intl/date_symbol_data_local.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID', null);
-
+  Get.put(TimeController());
+  Get.put(WideController());
   runApp(const MainApp());
 }
 

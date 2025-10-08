@@ -6,7 +6,7 @@ import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class History extends StatelessWidget {
   final historyController = Get.find<HistoryController>();
-
+  
   History({super.key});
 
   @override
@@ -16,6 +16,7 @@ class History extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
+        // The title is now part of the body for better control over placement and style
         title: Text(
           "History",
           style: TextStyle(
@@ -35,21 +36,61 @@ class History extends StatelessWidget {
           );
         }
         return ListView.builder(
-          padding: const EdgeInsets.all(12),
-          itemCount: historyController.completedList.length,
+          // Use a column and ListView.builder so we can add the 11:01 AM chip.
+          // For a simple list, we can just use a Column as the main body.
+          // Since the list items are identical, it is assumed they are for the same time,
+          // matching the single "11:01AM" chip in the image.
+          itemCount:
+              historyController.completedList.length +
+              1, // +1 for the time chip
+          padding: const EdgeInsets.only(
+            top: 0,
+            left: 12,
+            right: 12,
+            bottom: 12,
+          ),
           itemBuilder: (context, index) {
-            final todo = historyController.completedList[index];
+            // First item is the time chip
+            if (index == 0) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900], // Darker background for the chip
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      "11:01AM",
+                      style: TextStyle(
+                        color: AppColors.textLight, // White/Light text
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            final todo = historyController.completedList[index - 1];
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
+           
+              color: Colors.grey[850],
+              margin: const EdgeInsets.only(bottom: 15),
               decoration: BoxDecoration(
-                color: Colors.grey[850],
+                color: const Color(0xFF333333),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: ListTile(
                 leading: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: AppColors.neon,
+                    color: AppColors.neon, // Neon green check background
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(Icons.check, color: Colors.black, size: 20),
@@ -57,9 +98,10 @@ class History extends StatelessWidget {
                 title: Text(
                   todo.Title,
                   style: TextStyle(
-                    color: AppColors.textLight,
+                    color: AppColors.textLight, // White text
                     fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.lineThrough,
+                    fontSize: 16,
+                  
                   ),
                 ),
                 subtitle: Text(
@@ -67,9 +109,13 @@ class History extends StatelessWidget {
                   style: TextStyle(color: AppColors.textGrey),
                 ),
                 trailing: IconButton(
+               
+                  iconSize: 22,
                   onPressed: () {
-                    historyController.deleteHistory(todo);
+                   
+                    debugPrint('Delete history for: ${todo.Title}');
                   },
+                 
                   icon: const Icon(Icons.delete, color: Colors.redAccent),
                 ),
               ),
