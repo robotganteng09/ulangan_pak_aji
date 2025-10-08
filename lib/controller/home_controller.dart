@@ -71,4 +71,23 @@ class HomeController extends GetxController {
     dropDownController.setSelected("");
     dateController.clear();
   }
+void deleteTodo(int index) {
+    final todoToDelete = todolist[index];
+    if (todoToDelete.isDone) {
+      historyController.deleteHistory(todoToDelete);
+    }
+  
+    todolist.removeAt(index);
+
+    Get.snackbar(
+      'Berhasil',
+      'Aktivitas "${todoToDelete.Title}" telah dihapus.',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor:
+          Get.theme.snackBarTheme.backgroundColor?.withOpacity(0.8) ??
+          Color(0xFF333333),
+    );
+
+    todolist.refresh();
+  }
 }

@@ -5,14 +5,19 @@ import 'package:ulangan_pak_aji/binding/historyBinding.dart';
 import 'package:ulangan_pak_aji/binding/homeBinding.dart';
 import 'package:ulangan_pak_aji/binding/loginBinding.dart';
 import 'package:ulangan_pak_aji/binding/splash_binding.dart';
+import 'package:ulangan_pak_aji/binding/wide_binding.dart';
 import 'package:ulangan_pak_aji/pages/Dashboard.dart';
-import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20history/HistoryPage.dart';
 import 'package:ulangan_pak_aji/pages/ProfillePage.dart';
 import 'package:ulangan_pak_aji/pages/SplashScreen.dart';
 import 'package:ulangan_pak_aji/pages/addTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
-import 'package:ulangan_pak_aji/pages/homePage.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20home/homePage.dart';
+
 import 'package:ulangan_pak_aji/pages/loginPage.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20history/history_wide.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20history/history_wide_page.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20home/home_wide_page.dart';
 
 import 'package:ulangan_pak_aji/routes/route.dart';
 
@@ -45,6 +50,16 @@ class AppPage {
       name: AppRoutes.Splashscreen,
       page: () => Splashscreen(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.histoyWidePage,
+      page: () => ExamplePage(),
+      binding: WideBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.HomeWidePage,
+      page: () => HomeWidePage(),
+      binding: WideBinding(),
     ),
   ];
 }
