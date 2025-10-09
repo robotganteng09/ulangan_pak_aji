@@ -101,7 +101,7 @@ class Homepage extends StatelessWidget {
                               ),
                               elevation: 0,
                               shape: RoundedRectangleBorder(
-                                // ⚙️ Border radius lebih besar
+
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Padding(
@@ -120,14 +120,14 @@ class Homepage extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              // ⚙️ Judul
+                                             
                                               Flexible(
                                                 child: Text(
                                                   todo.Title,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize:
-                                                        20, // Ukuran lebih besar
+                                                        20, 
                                                     color: AppColors
                                                         .textLight, // Warna teks putih/terang
                                                   ),
