@@ -6,7 +6,7 @@ import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class History extends StatelessWidget {
   final historyController = Get.find<HistoryController>();
-  
+
   History({super.key});
 
   @override
@@ -79,8 +79,6 @@ class History extends StatelessWidget {
 
             final todo = historyController.completedList[index - 1];
             return Container(
-           
-              color: Colors.grey[850],
               margin: const EdgeInsets.only(bottom: 15),
               decoration: BoxDecoration(
                 color: const Color(0xFF333333),
@@ -90,7 +88,7 @@ class History extends StatelessWidget {
                 leading: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: AppColors.neon, // Neon green check background
+                    color: AppColors.neon,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(Icons.check, color: Colors.black, size: 20),
@@ -98,10 +96,9 @@ class History extends StatelessWidget {
                 title: Text(
                   todo.Title,
                   style: TextStyle(
-                    color: AppColors.textLight, // White text
+                    color: AppColors.textLight,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                  
                   ),
                 ),
                 subtitle: Text(
@@ -109,13 +106,10 @@ class History extends StatelessWidget {
                   style: TextStyle(color: AppColors.textGrey),
                 ),
                 trailing: IconButton(
-               
                   iconSize: 22,
                   onPressed: () {
-                   
-                    debugPrint('Delete history for: ${todo.Title}');
+                    historyController.deleteHistory(todo);
                   },
-                 
                   icon: const Icon(Icons.delete, color: Colors.redAccent),
                 ),
               ),
