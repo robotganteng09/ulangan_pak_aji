@@ -19,7 +19,6 @@ class Homepage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
-
         title: Text(
           "Your Activities",
           style: TextStyle(
@@ -42,6 +41,7 @@ class Homepage extends StatelessWidget {
       ),
       body: Column(
         children: [
+        
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Obx(
@@ -66,6 +66,7 @@ class Homepage extends StatelessWidget {
             ),
           ),
 
+      
           Expanded(
             child: Container(
               margin: const EdgeInsets.all(5),
@@ -86,6 +87,15 @@ class Homepage extends StatelessWidget {
                         itemCount: homeController.todolist.length,
                         itemBuilder: (context, index) {
                           final todo = homeController.todolist[index];
+                          final isDone = todo['isDone'] == 1;
+
+                          // Parse tanggal dari string
+                          DateTime? dueDate;
+                          if (todo['dueDate'] != null &&
+                              todo['dueDate'].toString().isNotEmpty) {
+                            dueDate = DateTime.tryParse(todo['dueDate']);
+                          }
+
                           return GestureDetector(
                             onTap: () {
                               Get.toNamed(
@@ -101,7 +111,6 @@ class Homepage extends StatelessWidget {
                               ),
                               elevation: 0,
                               shape: RoundedRectangleBorder(
-
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Padding(
@@ -109,33 +118,31 @@ class Homepage extends StatelessWidget {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    // Bagian kiri: teks
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          // 🔹 Judul dan kategori
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                             
                                               Flexible(
                                                 child: Text(
-                                                  todo.Title,
+                                                  todo['title'] ?? 'Untitled',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        20, 
-                                                    color: AppColors
-                                                        .textLight, // Warna teks putih/terang
+                                                    fontSize: 20,
+                                                    color: AppColors.textLight,
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
                                               ),
-                                              // ⚙️ Kategori di kanan atas
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -149,7 +156,7 @@ class Homepage extends StatelessWidget {
                                                       BorderRadius.circular(5),
                                                 ),
                                                 child: Text(
-                                                  "Category: ${todo.category.toUpperCase()}",
+                                                  "Category: ${(todo['category'] ?? '').toString().toUpperCase()}",
                                                   style: TextStyle(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.bold,
@@ -160,19 +167,21 @@ class Homepage extends StatelessWidget {
                                             ],
                                           ),
                                           const SizedBox(height: 6),
-                                          // ⚙️ Deskripsi
+
+                                          // 🔹 Deskripsi
                                           Text(
-                                            todo.Description,
+                                            todo['description'] ?? '',
                                             style: TextStyle(
                                               fontSize: 14,
                                               color: AppColors.textGrey,
                                             ),
                                           ),
                                           const SizedBox(height: 12),
-                                          // ⚙️ Due Date (dengan label "Due")
+
+                                          // 🔹 Tanggal jatuh tempo
                                           Text(
-                                            todo.dueDate != null
-                                                ? "Due: ${DateFormat('d MMMM yyyy').format(todo.dueDate!)}"
+                                            dueDate != null
+                                                ? "Due: ${DateFormat('d MMMM yyyy').format(dueDate)}"
                                                 : "Due: No date set",
                                             style: TextStyle(
                                               fontSize: 13,
@@ -184,15 +193,17 @@ class Homepage extends StatelessWidget {
                                       ),
                                     ),
 
-                                    SizedBox(width: 15),
+                                    const SizedBox(width: 15),
+
+                                    // 🔹 Tombol ceklis
                                     Container(
                                       width: 40,
                                       height: 40,
                                       decoration: BoxDecoration(
-                                        color: todo.isDone
+                                        color: isDone
                                             ? AppColors.neon
                                             : Colors.transparent,
-                                        border: todo.isDone
+                                        border: isDone
                                             ? null
                                             : Border.all(
                                                 color: AppColors.neon,
@@ -202,21 +213,20 @@ class Homepage extends StatelessWidget {
                                       ),
                                       child: InkWell(
                                         onTap: () {
-                                          homeController.UpdateList(
+                                          homeController.updateList(
                                             index,
-                                            todo.Title,
-                                            todo.Description,
-                                            !todo.isDone, // Toggle status
-                                            todo.category,
-                                            todo.dueDate,
+                                            todo['title'] ?? '',
+                                            todo['description'] ?? '',
+                                            !isDone,
+                                            todo['category'] ?? '',
+                                            dueDate,
                                           );
                                         },
                                         child: Center(
                                           child: Icon(
                                             Icons.check,
-                                            color: todo.isDone
-                                                ? Colors
-                                                      .black // Teks hitam di atas neon
+                                            color: isDone
+                                                ? Colors.black
                                                 : AppColors.neon,
                                             size: 28,
                                           ),
@@ -236,6 +246,7 @@ class Homepage extends StatelessWidget {
         ],
       ),
 
+      // 🔹 Tombol tambah
       floatingActionButton: Container(
         padding: const EdgeInsets.all(8.0),
         child: FloatingActionButton(
@@ -243,15 +254,13 @@ class Homepage extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           backgroundColor: AppColors.neon,
-
           child: const Icon(Icons.add, color: Colors.black, size: 40),
           onPressed: () {
             Get.toNamed(AppRoutes.addWidepage);
           },
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat, // Tombol di tengah bawah
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

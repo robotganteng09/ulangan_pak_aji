@@ -100,9 +100,11 @@ class _AddPageState extends State<AddPage> {
                 ),
                 child: DropdownButton<String>(
                   dropdownColor: AppColors.background,
-                  value: dropdown.selectedValue.value.isEmpty
-                      ? null
-                      : dropdown.selectedValue.value,
+                  value:
+                      dropdown.pilihan.contains(dropdown.selectedValue.value) &&
+                          dropdown.selectedValue.value.isNotEmpty
+                      ? dropdown.selectedValue.value
+                      : null, // ✅ aman dari crash
                   hint: const Text(
                     "Pilih Kategori",
                     style: TextStyle(color: AppColors.textLight),
@@ -133,6 +135,7 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
+
             const SizedBox(height: 40),
 
             SizedBox(

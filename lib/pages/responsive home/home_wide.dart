@@ -94,6 +94,21 @@ class HomeWide extends StatelessWidget {
               // LIST TODO
               ...List.generate(homeController.todolist.length, (index) {
                 final todo = homeController.todolist[index];
+                final title = todo['title'] ?? '';
+                final description = todo['description'] ?? '';
+                final category = todo['category'] ?? '';
+                final isDone = (todo['isDone'] ?? 0) == 1;
+                final dueDateStr = todo['dueDate'] ?? '';
+                DateTime? dueDate;
+
+                if (dueDateStr.isNotEmpty) {
+                  try {
+                    dueDate = DateTime.parse(dueDateStr);
+                  } catch (_) {
+                    dueDate = null;
+                  }
+                }
+
                 return GestureDetector(
                   onTap: () {
                     Get.toNamed(
@@ -117,6 +132,7 @@ class HomeWide extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Judul + kategori
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -124,7 +140,7 @@ class HomeWide extends StatelessWidget {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        todo.Title,
+                                        title,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -133,29 +149,34 @@ class HomeWide extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 2,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.neon.withOpacity(0.15),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Text(
-                                        "Category: ${todo.category.toUpperCase()}",
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.neon,
+                                    if (category.isNotEmpty)
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.neon.withOpacity(
+                                            0.15,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            5,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "Category: ${category.toUpperCase()}",
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.neon,
+                                          ),
                                         ),
                                       ),
-                                    ),
                                   ],
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
-                                  todo.Description,
+                                  description,
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: AppColors.textGrey,
@@ -163,8 +184,8 @@ class HomeWide extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 12),
                                 Text(
-                                  todo.dueDate != null
-                                      ? "Due: ${DateFormat('d MMMM yyyy').format(todo.dueDate!)}"
+                                  dueDate != null
+                                      ? "Due: ${DateFormat('d MMMM yyyy').format(dueDate)}"
                                       : "Due: No date set",
                                   style: TextStyle(
                                     fontSize: 13,
@@ -180,31 +201,29 @@ class HomeWide extends StatelessWidget {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: todo.isDone
+                              color: isDone
                                   ? AppColors.neon
                                   : Colors.transparent,
-                              border: todo.isDone
+                              border: isDone
                                   ? null
                                   : Border.all(color: AppColors.neon, width: 2),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: InkWell(
                               onTap: () {
-                                homeController.UpdateList(
+                                homeController.updateList(
                                   index,
-                                  todo.Title,
-                                  todo.Description,
-                                  !todo.isDone,
-                                  todo.category,
-                                  todo.dueDate,
+                                  title,
+                                  description,
+                                  !isDone,
+                                  category,
+                                  dueDate,
                                 );
                               },
                               child: Center(
                                 child: Icon(
                                   Icons.check,
-                                  color: todo.isDone
-                                      ? Colors.black
-                                      : AppColors.neon,
+                                  color: isDone ? Colors.black : AppColors.neon,
                                   size: 28,
                                 ),
                               ),
