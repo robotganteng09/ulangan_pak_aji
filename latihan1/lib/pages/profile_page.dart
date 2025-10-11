@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:latihan1/controllers/logincontroller.dart';
+import 'package:latihan1/widgets/widgetcomponents.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
+  ProfilePage({super.key});
+  final controller = Get.find<Logincontroller>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +28,13 @@ class ProfilePage extends StatelessWidget {
             const Text(
               "Kelas: XI PPLG 2",
               style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+
+            CustomButton(
+              text: "Logout",
+              onPressed: () {
+                controller.logout();
+              },
             ),
           ],
         ),
