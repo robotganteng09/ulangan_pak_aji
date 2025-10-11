@@ -9,5 +9,6 @@ class AppRoutes {
   static const String Splashscreen = "/SplashScreen";
   static const String histoyWidePage = "/historyWidePage";
   static const String HomeWidePage = "/homeWidePage";
-  static const String addPage = "/addPage";
+  static const String addWidepage = "/addWidePage";
+  static const String EditWidepage = "/EditWidePage";
 }

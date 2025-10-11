@@ -246,7 +246,7 @@ class Homepage extends StatelessWidget {
 
           child: const Icon(Icons.add, color: Colors.black, size: 40),
           onPressed: () {
-            Get.toNamed(AppRoutes.Addpage);
+            Get.toNamed(AppRoutes.addWidepage);
           },
         ),
       ),

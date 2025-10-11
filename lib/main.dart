@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ulangan_pak_aji/controller/editController.dart';
 import 'package:ulangan_pak_aji/controller/time_controller.dart';
 import 'package:ulangan_pak_aji/controller/wide_controller.dart';
 import 'package:ulangan_pak_aji/routes/pages.dart';
@@ -11,6 +12,7 @@ void main() async {
   await initializeDateFormatting('id_ID', null);
   Get.put(TimeController());
   Get.put(WideController());
+  Get.put(EditTodoController());
   runApp(const MainApp());
 }
 
