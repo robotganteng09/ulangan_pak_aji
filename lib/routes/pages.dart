@@ -7,13 +7,15 @@ import 'package:ulangan_pak_aji/binding/loginBinding.dart';
 import 'package:ulangan_pak_aji/binding/splash_binding.dart';
 import 'package:ulangan_pak_aji/binding/wide_binding.dart';
 import 'package:ulangan_pak_aji/pages/Dashboard.dart';
+import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20add/addTodo_wide_page.dart';
-import 'package:ulangan_pak_aji/pages/responsive%20history/HistoryPage.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20edit/edit_wide_page.dart';
+import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
 import 'package:ulangan_pak_aji/pages/ProfillePage.dart';
 import 'package:ulangan_pak_aji/pages/SplashScreen.dart';
-import 'package:ulangan_pak_aji/pages/responsive%20add/addTodoPage.dart';
-import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
-import 'package:ulangan_pak_aji/pages/responsive%20home/homePage.dart';
+import 'package:ulangan_pak_aji/pages/addTodoPage.dart';
+
+import 'package:ulangan_pak_aji/pages/homePage.dart';
 
 import 'package:ulangan_pak_aji/pages/loginPage.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20history/history_wide.dart';
@@ -63,8 +65,13 @@ class AppPage {
       binding: WideBinding(),
     ),
     GetPage(
-      name: AppRoutes.Addpage,
+      name: AppRoutes.addWidepage,
       page: () => AddtodoWidePage(),
+      binding: WideBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.EditWidepage,
+      page: () => EditWidePage(),
       binding: WideBinding(),
     ),
   ];

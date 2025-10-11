@@ -47,7 +47,7 @@ class HomeWide extends StatelessWidget {
               backgroundColor: AppColors.neon,
               child: const Icon(Icons.add, color: Colors.black, size: 25),
               onPressed: () {
-                Get.toNamed(AppRoutes.Addpage);
+                Get.toNamed(AppRoutes.addWidepage);
               },
             ),
           ),
@@ -97,7 +97,7 @@ class HomeWide extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     Get.toNamed(
-                      AppRoutes.Editpage,
+                      AppRoutes.EditWidepage,
                       arguments: {'index': index, 'todo': todo},
                     );
                   },

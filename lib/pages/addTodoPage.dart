@@ -133,6 +133,7 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 40),
 
             SizedBox(
               width: double.infinity,
