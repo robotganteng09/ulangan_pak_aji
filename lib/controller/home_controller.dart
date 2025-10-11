@@ -1,93 +1,116 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
-import 'package:ulangan_pak_aji/widgets/listArray.dart';
+
+import 'package:ulangan_pak_aji/db_helper.dart';
 
 class HomeController extends GetxController {
-  var todolist = <ToDoLIst>[].obs;
+  var todolist = <Map<String, dynamic>>[].obs;
+
   final titleController = TextEditingController();
   final descController = TextEditingController();
 
-  HistoryController historyController = Get.put(HistoryController());
-  DropDownController dropDownController = Get.find<DropDownController>();
-  DateController dateController = Get.find<DateController>();
+  final dbHelper = DBHelper();
+  final historyController = Get.put(HistoryController());
+  final dropDownController = Get.find<DropDownController>();
+  final dateController = Get.find<DateController>();
 
-  void UpdateList(
+  @override
+  void onInit() {
+    super.onInit();
+    loadTodos();
+  }
+
+  // 🔹 Load dari DB
+  Future<void> loadTodos() async {
+    final data = await dbHelper.getTodos();
+    todolist.value = data; // langsung assign list<Map<String, dynamic>>
+  }
+
+  // 🔹 Tambah Data
+  Future<void> addList(
+    String title,
+    String description,
+    String category,
+    DateTime? dueDate,
+  ) async {
+   final due = (dueDate ?? dateController.selectedDate.value) != null
+        ? (dueDate ?? dateController.selectedDate.value)!.toIso8601String()
+        : '';
+
+
+    await dbHelper.insertTodo({
+      'title': title,
+      'description': description,
+      'category': category,
+      'isDone': 0,
+      'dueDate': due,
+    });
+
+    // Reload list
+    await loadTodos();
+
+    clearForm();
+  }
+
+  // 🔹 Update Data
+  Future<void> updateList(
     int index,
     String newtitle,
     String newDescription,
     bool newisDone,
     String newCategory,
     DateTime? newDueDate,
-  ) {
-    bool wasDone = todolist[index].isDone;
+  ) async {
+    final todo = todolist[index];
+    final id = todo['id'];
 
-    todolist[index].Title = newtitle;
-    todolist[index].Description = newDescription;
-    todolist[index].isDone = newisDone;
-    todolist[index].category = newCategory;
-    todolist[index].dueDate = newDueDate;
+    await dbHelper.updateTodo(id, {
+      'title': newtitle,
+      'description': newDescription,
+      'category': newCategory,
+      'isDone': newisDone ? 1 : 0,
+      'dueDate': newDueDate?.toIso8601String() ?? '',
+    });
 
-    if (newisDone && !wasDone) {
-      historyController.addHistory(todolist[index]);
-      todolist.removeAt(index);
-    } else if (!newisDone && wasDone) {
-      historyController.deleteHistory(todolist[index]);
-    }
+    // Update nilai lokal
+    todolist[index] = {
+      'id': id,
+      'title': newtitle,
+      'description': newDescription,
+      'category': newCategory,
+      'isDone': newisDone ? 1 : 0,
+      'dueDate': newDueDate?.toIso8601String() ?? '',
+    };
+
     todolist.refresh();
   }
 
-  void addList(
-    String title,
-    String description,
-    String category,
-    DateTime? dueDate,
-  ) {
-    final DateTime? finalDueDate = dueDate ?? dateController.selectedDate.value;
+  // 🔹 Hapus Data
+  Future<void> deleteTodo(int index) async {
+    final todo = todolist[index];
+    final id = todo['id'];
 
-    todolist.add(
-      ToDoLIst(
-        Title: title,
-        Description: description,
-        category: category,
-        isDone: false,
-        dueDate: finalDueDate,
-      ),
+    await dbHelper.deleteTodo(id);
+    todolist.removeAt(index);
+
+    Get.snackbar(
+      'Berhasil',
+      'Aktivitas "${todo['title']}" telah dihapus.',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor:
+          Get.theme.snackBarTheme.backgroundColor?.withOpacity(0.8) ??
+          const Color(0xFF333333),
     );
-    dropDownController.setSelected("");
-    dateController.clear();
   }
 
-  void updateCategory(int index, String newCategory) {
-    todolist[index].category = newCategory;
-    todolist.refresh();
-  }
-
+  // 🔹 Clear form input
   void clearForm() {
     titleController.clear();
     descController.clear();
     dropDownController.setSelected("");
     dateController.clear();
-  }
-void deleteTodo(int index) {
-    final todoToDelete = todolist[index];
-    if (todoToDelete.isDone) {
-      historyController.deleteHistory(todoToDelete);
-    }
-  
-    todolist.removeAt(index);
-
-    Get.snackbar(
-      'Berhasil',
-      'Aktivitas "${todoToDelete.Title}" telah dihapus.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor:
-          Get.theme.snackBarTheme.backgroundColor?.withOpacity(0.8) ??
-          Color(0xFF333333),
-    );
-
-    todolist.refresh();
   }
 }

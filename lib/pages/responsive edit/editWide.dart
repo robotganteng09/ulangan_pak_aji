@@ -160,7 +160,7 @@ class Editwide extends StatelessWidget {
                   const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () {
-                      homeC.UpdateList(
+                      homeC.updateList(
                         index,
                         editC.titleController.text,
                         editC.descController.text,

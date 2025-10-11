@@ -143,9 +143,19 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   ),
                   child: DropdownButton<String>(
                     dropdownColor: AppColors.background,
-                    value: dropdownc.selectedValue.value.isEmpty
-                        ? selectedValue
-                        : dropdownc.selectedValue.value,
+                    value:
+                        dropdownc.pilihan.contains(
+                              dropdownc.selectedValue.value.isNotEmpty
+                                  ? dropdownc.selectedValue.value
+                                  : selectedValue,
+                            ) &&
+                            (dropdownc.selectedValue.value.isNotEmpty ||
+                                selectedValue != null)
+                        ? (dropdownc.selectedValue.value.isNotEmpty
+                              ? dropdownc.selectedValue.value
+                              : selectedValue)
+                        : null, // ✅ aman dari crash
+
                     hint: const Text(
                       "Pilih Kategori",
                       style: TextStyle(color: AppColors.textLight),
@@ -209,7 +219,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
               color: AppColors.textLight,
               textColor: AppColors.background,
               onPressed: () {
-                homeC.UpdateList(
+                homeC.updateList(
                   index,
                   editController.titleController.text,
                   editController.descController.text,
