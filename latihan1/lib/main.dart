@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       initialBinding: mainBinding(),
-      initialRoute: AppRoutes.Examplepage,
+      initialRoute: AppRoutes.bottomNav,
       getPages: AppPages.pages,
     );
   }

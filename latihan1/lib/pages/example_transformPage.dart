@@ -19,8 +19,8 @@ class ExampleTransformpage extends StatelessWidget {
           controller.updatelayout(Constraints);
           return Obx(
             () => controller.ismobile.value
-                ? FootballPlayerMobile()
-                : FootballPlayerWide(),
+                ? ExampleMobile()
+                : ExampleWidescreen(),
           );
         },
       ),
