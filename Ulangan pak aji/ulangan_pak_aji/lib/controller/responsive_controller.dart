@@ -7,5 +7,5 @@ class ResponsiveController extends GetxController {
     ismobile.value = constrains.maxWidth < 600;
   }
 
-  //testt
+  //testtaaadasdasdadasdasdadadasd
 }
