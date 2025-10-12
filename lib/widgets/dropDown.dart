@@ -19,12 +19,15 @@ class DropdownReusable<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
-      value: value,
-      hint: Text(hintText),
+      // ✅ hindari crash saat value tidak ada di items
+      value: items.contains(value) ? value : null,
+      hint: Text(hintText, style: const TextStyle(color: Colors.grey)),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
+      isExpanded: true, // ✅ biar teks tidak terpotong
+      dropdownColor: Theme.of(context).cardColor, // optional: sesuaikan tema
       items: items.map((T item) {
         return DropdownMenuItem<T>(value: item, child: Text(itemLabel(item)));
       }).toList(),

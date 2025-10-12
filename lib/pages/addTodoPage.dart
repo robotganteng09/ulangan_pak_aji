@@ -89,22 +89,21 @@ class _AddPageState extends State<AddPage> {
               marginTop: 20,
             ),
 
-            Obx(
-              () => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: AppColors.neon, width: 2),
-                  ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: AppColors.neon, width: 2),
                 ),
-                child: DropdownButton<String>(
+              ),
+              child: Obx(
+                () => DropdownButton<String>(
                   dropdownColor: AppColors.background,
                   value:
                       dropdown.pilihan.contains(dropdown.selectedValue.value) &&
                           dropdown.selectedValue.value.isNotEmpty
                       ? dropdown.selectedValue.value
-                      : null, // ✅ aman dari crash
+                      : null,
                   hint: const Text(
                     "Pilih Kategori",
                     style: TextStyle(color: AppColors.textLight),
@@ -117,7 +116,7 @@ class _AddPageState extends State<AddPage> {
                   ),
                   items: dropdown.pilihan
                       .map(
-                        (item) => DropdownMenuItem(
+                        (item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
                             item,
@@ -127,10 +126,10 @@ class _AddPageState extends State<AddPage> {
                       )
                       .toList(),
                   onChanged: (value) {
-                    if (value != null) {
-                      setState(() => selectedValue = value);
-                      dropdown.setSelected(value);
-                    }
+                    dropdown.setSelected(value ?? '');
+                    setState(() {
+                      selectedValue = value;
+                    });
                   },
                 ),
               ),

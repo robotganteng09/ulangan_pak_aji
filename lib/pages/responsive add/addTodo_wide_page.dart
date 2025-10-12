@@ -12,20 +12,18 @@ class AddtodoWidePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
-  builder: (context, constraints) {
-    final controller = Get.find<WideController>();
+        builder: (context, constraints) {
+          final controller = Get.find<WideController>();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.updateLayout(constraints);
-    });
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            controller.updateLayout(constraints);
+          });
 
-    return Obx(() {
-      return controller.isMobile.value
-          ? AddPage()
-          : AddtodoWide();
-    });
-  },
-)
+          return Obx(() {
+            return controller.isMobile.value ? AddPage() : AddtodoWide();
+          });
+        },
+      ),
     );
   }
 }

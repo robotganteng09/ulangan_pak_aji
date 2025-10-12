@@ -41,7 +41,6 @@ class Homepage extends StatelessWidget {
       ),
       body: Column(
         children: [
-        
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Obx(
@@ -66,7 +65,6 @@ class Homepage extends StatelessWidget {
             ),
           ),
 
-      
           Expanded(
             child: Container(
               margin: const EdgeInsets.all(5),

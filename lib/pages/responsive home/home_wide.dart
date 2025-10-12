@@ -16,11 +16,64 @@ class HomeWide extends StatelessWidget {
     const double standardPadding = 16.0;
 
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: const Color(0xFF1A1A1A),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: AppColors.neon.withOpacity(0.2)),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: AppColors.neon,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.white),
+              title: const Text(
+                'Beranda',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Get.back(); // Menutup drawer
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person, color: Colors.white),
+              title: const Text(
+                'Profile',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Get.toNamed(AppRoutes.Profillepage);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info, color: Colors.white),
+              title: const Text(
+                'Tentang Aplikasi',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: AppColors.background,
         elevation: 0,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: AppColors.neon),
+            onPressed: () => Scaffold.of(context).openDrawer(), // buka drawer
+          ),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
@@ -36,7 +89,7 @@ class HomeWide extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(right: standardPadding),
+            margin: const EdgeInsets.only(right: 16),
             width: 40,
             height: 40,
             child: FloatingActionButton(

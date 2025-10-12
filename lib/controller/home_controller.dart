@@ -36,10 +36,9 @@ class HomeController extends GetxController {
     String category,
     DateTime? dueDate,
   ) async {
-   final due = (dueDate ?? dateController.selectedDate.value) != null
+    final due = (dueDate ?? dateController.selectedDate.value) != null
         ? (dueDate ?? dateController.selectedDate.value)!.toIso8601String()
         : '';
-
 
     await dbHelper.insertTodo({
       'title': title,
@@ -110,7 +109,7 @@ class HomeController extends GetxController {
   void clearForm() {
     titleController.clear();
     descController.clear();
-    dropDownController.setSelected("");
+    dropDownController.clear();
     dateController.clear();
   }
 }

@@ -141,50 +141,42 @@ class _EditTodoPageState extends State<EditTodoPage> {
                       bottom: BorderSide(color: AppColors.neon, width: 2),
                     ),
                   ),
-                  child: DropdownButton<String>(
-                    dropdownColor: AppColors.background,
-                    value:
-                        dropdownc.pilihan.contains(
-                              dropdownc.selectedValue.value.isNotEmpty
-                                  ? dropdownc.selectedValue.value
-                                  : selectedValue,
-                            ) &&
-                            (dropdownc.selectedValue.value.isNotEmpty ||
-                                selectedValue != null)
-                        ? (dropdownc.selectedValue.value.isNotEmpty
-                              ? dropdownc.selectedValue.value
-                              : selectedValue)
-                        : null, // ✅ aman dari crash
-
-                    hint: const Text(
-                      "Pilih Kategori",
-                      style: TextStyle(color: AppColors.textLight),
-                    ),
-                    isExpanded: true,
-                    underline: const SizedBox(),
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: AppColors.textLight,
-                    ),
-                    items: dropdownc.pilihan
-                        .map(
-                          (item) => DropdownMenuItem(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                color: AppColors.textLight,
+                  child: Obx(
+                    () => DropdownButton<String>(
+                      dropdownColor: AppColors.background,
+                      value:
+                          dropdownc.pilihan.contains(
+                            dropdownc.selectedValue.value,
+                          )
+                          ? dropdownc.selectedValue.value
+                          : null, // ✅ hindari value tidak ada di list
+                      hint: const Text(
+                        "Pilih Kategori",
+                        style: TextStyle(color: AppColors.textLight),
+                      ),
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: AppColors.textLight,
+                      ),
+                      items: dropdownc.pilihan
+                          .map(
+                            (item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  color: AppColors.textLight,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() => selectedValue = value);
-                        dropdownc.setSelected(value);
-                      }
-                    },
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        dropdownc.setSelected(value ?? '');
+                      },
+                    ),
                   ),
                 ),
               ),
