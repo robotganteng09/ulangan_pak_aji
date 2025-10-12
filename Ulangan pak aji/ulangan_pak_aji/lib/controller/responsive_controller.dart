@@ -6,4 +6,6 @@ class ResponsiveController extends GetxController {
   void updatelayout(BoxConstraints constrains) {
     ismobile.value = constrains.maxWidth < 600;
   }
+
+  //testt
 }
