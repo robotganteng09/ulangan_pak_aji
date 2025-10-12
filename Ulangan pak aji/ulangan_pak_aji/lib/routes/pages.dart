@@ -1,0 +1,78 @@
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:ulangan_pak_aji/binding/dashboardBinding.dart';
+import 'package:ulangan_pak_aji/binding/historyBinding.dart';
+
+import 'package:ulangan_pak_aji/binding/homeBinding.dart';
+import 'package:ulangan_pak_aji/binding/loginBinding.dart';
+import 'package:ulangan_pak_aji/binding/responsive_binding.dart';
+import 'package:ulangan_pak_aji/binding/splash_binding.dart';
+import 'package:ulangan_pak_aji/binding/wide_binding.dart';
+import 'package:ulangan_pak_aji/pages/Dashboard.dart';
+import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20add/addTodo_wide_page.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20edit/edit_wide_page.dart';
+import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
+import 'package:ulangan_pak_aji/pages/ProfillePage.dart';
+import 'package:ulangan_pak_aji/pages/SplashScreen.dart';
+import 'package:ulangan_pak_aji/pages/addTodoPage.dart';
+
+import 'package:ulangan_pak_aji/pages/homePage.dart';
+
+import 'package:ulangan_pak_aji/pages/loginPage.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20history/history_wide_page.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20home/home_wide_page.dart';
+
+import 'package:ulangan_pak_aji/routes/route.dart';
+
+class AppPage {
+  static final pages = [
+    GetPage(
+      name: AppRoutes.Loginpage,
+      page: () => Loginpage(),
+      bindings: [Loginbinding(), ResponsiveBinding()],
+    ),
+    GetPage(
+      name: AppRoutes.Homepage,
+      page: () => Homepage(),
+      bindings: [Homebinding()],
+    ),
+    GetPage(name: AppRoutes.Addpage, page: () => AddPage()),
+    GetPage(name: AppRoutes.Editpage, page: () => EditTodoPage()),
+    GetPage(
+      name: AppRoutes.Profillepage,
+      page: () => Profillepage(),
+      binding: Loginbinding(),
+    ),
+    GetPage(
+      name: AppRoutes.Dashboard,
+      page: () => Dashboard(),
+      bindings: [Dashboardbinding(), Homebinding(), Historybinding()],
+    ),
+    GetPage(name: AppRoutes.History, page: () => History()),
+    GetPage(
+      name: AppRoutes.Splashscreen,
+      page: () => Splashscreen(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.histoyWidePage,
+      page: () => ExamplePage(),
+      binding: WideBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.HomeWidePage,
+      page: () => HomeWidePage(),
+      binding: WideBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addWidepage,
+      page: () => AddtodoWidePage(),
+      binding: WideBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.EditWidepage,
+      page: () => EditWidePage(),
+      binding: WideBinding(),
+    ),
+  ];
+}
