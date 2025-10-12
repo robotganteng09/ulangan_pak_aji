@@ -5,4 +5,8 @@ class AppRoutes {
   static const String profilePage = "/profilepage";
   static const String bottomNav = "/bottomnav";
   static const String navdrawer = "/navdrawer";
+  static const String LoginPage = "/loginpage";
+  static const String Splashcreen = "/splashcreen";
+  static const String Contactpage = "/contactpage";
+  static const String Examplepage = "/examplepage";
 }

@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:latihan1/controllers/football_player_controller.dart';
-import 'package:latihan1/routes/routes.dart';
+import 'package:latihan1/controllers/example_controller.dart';
+import 'package:latihan1/pages/example_fitur/example_mobile.dart';
+import 'package:latihan1/pages/example_fitur/example_widescreen.dart';
+import 'package:latihan1/pages/footballplayerExample/football_mobile.dart';
+import 'package:latihan1/pages/footballplayerExample/football_widescreen.dart';
 
 class FootballPlayer extends StatelessWidget {
   FootballPlayer({super.key});
 
-  final footballPlayerController = Get.find<FootballPlayerController>();
-
+  final controller = Get.find<ExampleController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Football Players"), centerTitle: true),
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Obx(
-          () => ListView.builder(
-            itemCount: footballPlayerController.players.length,
-            itemBuilder: (context, index) {
-              final player = footballPlayerController.players[index];
-              return ListTile(
-                leading: Image.asset(player.imageAsset, width: 50, height: 50),
-                title: Text(player.name),
-                subtitle: Text("${player.position}  Number ${player.number}"),
-                onTap: () {
-                  Get.toNamed(AppRoutes.footballeditor, arguments: index);
-                },
-              );
-            },
-          ),
-        ),
+      body: LayoutBuilder(
+        builder: (context, Constraints) {
+          controller.updatelayout(Constraints);
+          return Obx(
+            () => controller.ismobile.value
+                ? FootballPlayerMobile()
+                : FootballPlayerWide(),
+          );
+        },
       ),
     );
   }

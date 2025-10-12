@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:latihan1/register.dart';
+
+import 'package:get/get.dart';
+import 'package:latihan1/controllers/logincontroller.dart';
+
+import 'package:latihan1/widgets/widgetcomponents.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,6 +11,8 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
+final controller = Get.find<Logincontroller>();
 
 class _LoginPageState extends State<LoginPage> {
   String loginStatus = "Please fill each form";
@@ -33,76 +38,21 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Welcome",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
+            ReuseTextField(
+              label: "name",
+              controller: controller.usernamecontroller,
+              isNUmber: false,
             ),
-            Text("Please fill username and password"),
-            Center(
-              child: Image.asset(
-                'assets/images/plane.png',
-                height: 120,
-                width: 120,
-              ),
+            ReuseTextField(
+              label: "password",
+              controller: controller.passwordcontroller,
+              isNUmber: false,
             ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: user,
-              decoration: InputDecoration(
-                hintText: 'Username',
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-            TextField(
-              controller: password,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Password',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: handleLogin,
-                child: Text("Login"),
-              ),
-            ),
-            Center(child: Text(loginStatus)),
-            const SizedBox(height: 20),
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  text: "Belum punya akun? ",
-                  style: TextStyle(color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text: "Register",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const RegisterPage(),
-                            ),
-                          );
-                        },
-                    ),
-                  ],
-                ),
-              ),
+            CustomButton(
+              text: "login",
+              onPressed: () {
+                controller.login();
+              },
             ),
           ],
         ),
