@@ -6,12 +6,15 @@ import 'package:ulangan_pak_aji/binding/homeBinding.dart';
 import 'package:ulangan_pak_aji/binding/loginBinding.dart';
 import 'package:ulangan_pak_aji/binding/responsive_binding.dart';
 import 'package:ulangan_pak_aji/binding/splash_binding.dart';
+import 'package:ulangan_pak_aji/binding/time_binding.dart';
 import 'package:ulangan_pak_aji/binding/wide_binding.dart';
-import 'package:ulangan_pak_aji/pages/Dashboard.dart';
+import 'package:ulangan_pak_aji/pages/DashboardPage.dart';
+
 import 'package:ulangan_pak_aji/pages/addTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20add/addTodo_mobile.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20add/addTodo_wide.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20dashboard/Dashboard_mobile.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20edit/edit_Wide.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20edit/edit_mobile.dart';
 import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
@@ -68,9 +71,14 @@ class AppPage {
       binding: Loginbinding(),
     ),
     GetPage(
-      name: AppRoutes.Dashboard,
-      page: () => Dashboard(),
-      bindings: [Dashboardbinding(), Homebinding(), Historybinding()],
+      name: AppRoutes.DashboardPage,
+      page: () => DashboardMobile(),
+      bindings: [
+        Dashboardbinding(),
+        Homebinding(),
+        Historybinding(),
+        ResponsiveBinding(),
+      ],
     ),
 
     GetPage(
@@ -87,12 +95,12 @@ class AppPage {
     GetPage(
       name: AppRoutes.HomeMobile,
       page: () => HomeMobile(),
-      binding: Homebinding(),
+      bindings: [Homebinding(), TimeBinding()],
     ),
     GetPage(
       name: AppRoutes.HomeWidePage,
       page: () => HomeWide(),
-      binding: Homebinding(),
+      bindings: [Homebinding(), TimeBinding()],
     ),
     GetPage(
       name: AppRoutes.addWidepage,

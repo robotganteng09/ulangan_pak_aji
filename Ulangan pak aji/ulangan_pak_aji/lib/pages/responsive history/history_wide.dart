@@ -49,7 +49,7 @@ class HistoryWide extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: maxListWidth),
           child: Obx(() {
-            if (historyController.completedList.isEmpty) {
+            if (historyController.historyList.isEmpty) {
               return Center(
                 child: Text(
                   "Belum ada todo",
@@ -60,7 +60,7 @@ class HistoryWide extends StatelessWidget {
 
             return ListView.builder(
               itemCount:
-                  historyController.completedList.length +
+                  historyController.historyList.length +
                   2, // +1 for time, +1 for divider
               padding: const EdgeInsets.symmetric(
                 horizontal: 12,
@@ -96,11 +96,11 @@ class HistoryWide extends StatelessWidget {
 
                 // Only render items if the index is within the bounds of the actual list
                 if (todoIndex < 0 ||
-                    todoIndex >= historyController.completedList.length) {
+                    todoIndex >= historyController.historyList.length) {
                   return const SizedBox.shrink();
                 }
 
-                final todo = historyController.completedList[todoIndex];
+                final todo = historyController.historyList[todoIndex];
 
                 // 3. Todo List Item
                 return Container(
@@ -139,7 +139,7 @@ class HistoryWide extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                      todo.Title,
+                      todo['title'] ?? 'No Title',
                       style: TextStyle(
                         color: AppColors.neon,
                         fontWeight: FontWeight.bold,
@@ -151,14 +151,14 @@ class HistoryWide extends StatelessWidget {
                       children: [
                         const SizedBox(height: 4),
                         Text(
-                          todo.Description,
+                          todo['description'] ?? 'No Description',
                           style: TextStyle(
                             color: AppColors.textLight.withOpacity(0.8),
                           ),
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          "Due: ${todo.dueDate ?? 'N/A'}",
+                          "Due: ${todo['dueDate'] ?? 'N/A'}",
                           style: TextStyle(
                             color: AppColors.textGrey.withOpacity(0.6),
                             fontSize: 12,
@@ -170,7 +170,10 @@ class HistoryWide extends StatelessWidget {
                     trailing: IconButton(
                       iconSize: 24,
                       onPressed: () {
-                        historyController.deleteHistory(todo);
+                        historyController.deleteHistory(
+                          todo['id'],
+                          todo['title'],
+                        );
                       },
                       icon: const Icon(
                         Icons.delete_outline,

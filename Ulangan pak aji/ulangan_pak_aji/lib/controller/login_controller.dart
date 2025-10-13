@@ -14,7 +14,7 @@ class LoginController extends GetxController {
     if (txtUser.text == user && txtPassword.text == password) {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("username", txtUser.text.toString());
-      Get.offNamed(AppRoutes.Dashboard);
+      Get.offNamed(AppRoutes.DashboardWidePage);
     } else {
       Get.snackbar("Login Gagal", "password salaah");
     }

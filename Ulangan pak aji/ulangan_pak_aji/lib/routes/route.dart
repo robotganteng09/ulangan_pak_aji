@@ -6,7 +6,7 @@ class AppRoutes {
   static const String Profillepage = "/ProfilePage";
   static const String ProfilleMobile = "/ProfileMobile";
   static const String ProfilleWide = "/ProfileWide";
-  static const String Dashboard = "/Dashboard";
+  static const String DashboardMobilePage = "/DashboardMobilePage";
   static const String History = "/History";
   static const String Splashscreen = "/SplashScreen";
   static const String histoyWidePage = "/historyWidePage";
@@ -17,4 +17,6 @@ class AppRoutes {
   static const String EditWidepage = "/EditWidePage";
   static const String AddPageMobile = "/AddPageMobile";
   static const String EditMobilepage = "/EditMobilePage";
+  static const String DashboardWidePage = "/DashboardWidePage";
+  static const String DashboardPage = "/DashboardWidePage";
 }

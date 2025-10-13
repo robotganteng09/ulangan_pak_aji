@@ -42,6 +42,43 @@ class DBHelper {
     return await client.insert('todo', data);
   }
 
+  // Tandai Todo sebagai Selesai
+  Future<int> markAsDone(int id) async {
+    final client = await db;
+    // Perbarui kolom 'isDone' menjadi 1 (true)
+    return await client.update(
+      'todo',
+      {'isDone': 1},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // Dapatkan Semua Todo yang Belum Selesai (isDone = 0)
+  Future<List<Map<String, dynamic>>> getPendingTodos() async {
+    final client = await db;
+    // Ambil data di mana isDone bernilai 0
+    return await client.query(
+      'todo',
+      where: 'isDone = ?',
+      whereArgs: [0],
+      orderBy:
+          'dueDate ASC', // Urutkan berdasarkan tanggal jatuh tempo atau sesuai keinginan
+    );
+  }
+
+  // Dapatkan Semua Todo yang Sudah Selesai (isDone = 1)
+  Future<List<Map<String, dynamic>>> getCompletedTodos() async {
+    final client = await db;
+    // Ambil data di mana isDone bernilai 1
+    return await client.query(
+      'todo',
+      where: 'isDone = ?',
+      whereArgs: [1],
+      orderBy: 'id DESC', // Urutkan dari yang terbaru diselesaikan
+    );
+  }
+
   // Get All Todos
   Future<List<Map<String, dynamic>>> getTodos() async {
     final client = await db;
