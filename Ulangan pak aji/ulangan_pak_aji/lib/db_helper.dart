@@ -36,16 +36,15 @@ class DBHelper {
     );
   }
 
-  // Insert Data
+  // Insert
   Future<int> insertTodo(Map<String, dynamic> data) async {
     final client = await db;
     return await client.insert('todo', data);
   }
 
-  // Tandai Todo sebagai Selesai
+  // Mark done
   Future<int> markAsDone(int id) async {
     final client = await db;
-    // Perbarui kolom 'isDone' menjadi 1 (true)
     return await client.update(
       'todo',
       {'isDone': 1},
@@ -54,50 +53,47 @@ class DBHelper {
     );
   }
 
-  // Dapatkan Semua Todo yang Belum Selesai (isDone = 0)
+  // Get pending todos
   Future<List<Map<String, dynamic>>> getPendingTodos() async {
     final client = await db;
-    // Ambil data di mana isDone bernilai 0
     return await client.query(
       'todo',
       where: 'isDone = ?',
       whereArgs: [0],
-      orderBy:
-          'dueDate ASC', // Urutkan berdasarkan tanggal jatuh tempo atau sesuai keinginan
+      orderBy: 'dueDate ASC',
     );
   }
 
-  // Dapatkan Semua Todo yang Sudah Selesai (isDone = 1)
+  // Get completed todos
   Future<List<Map<String, dynamic>>> getCompletedTodos() async {
     final client = await db;
-    // Ambil data di mana isDone bernilai 1
     return await client.query(
       'todo',
       where: 'isDone = ?',
       whereArgs: [1],
-      orderBy: 'id DESC', // Urutkan dari yang terbaru diselesaikan
+      orderBy: 'id DESC',
     );
   }
 
-  // Get All Todos
+  // Get all
   Future<List<Map<String, dynamic>>> getTodos() async {
     final client = await db;
     return await client.query('todo', orderBy: 'id DESC');
   }
 
-  // Update Todo
+  // Update
   Future<int> updateTodo(int id, Map<String, dynamic> data) async {
     final client = await db;
     return await client.update('todo', data, where: 'id = ?', whereArgs: [id]);
   }
 
-  // Delete Todo
+  // Delete
   Future<int> deleteTodo(int id) async {
     final client = await db;
     return await client.delete('todo', where: 'id = ?', whereArgs: [id]);
   }
 
-  // Clear All
+  // Clear all
   Future<void> clearAll() async {
     final client = await db;
     await client.delete('todo');

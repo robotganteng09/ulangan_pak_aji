@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:ulangan_pak_aji/binding/dashboardBinding.dart';
+import 'package:ulangan_pak_aji/binding/editBinding.dart';
 import 'package:ulangan_pak_aji/binding/historyBinding.dart';
 
 import 'package:ulangan_pak_aji/binding/homeBinding.dart';
@@ -8,7 +9,6 @@ import 'package:ulangan_pak_aji/binding/responsive_binding.dart';
 import 'package:ulangan_pak_aji/binding/splash_binding.dart';
 import 'package:ulangan_pak_aji/binding/time_binding.dart';
 import 'package:ulangan_pak_aji/binding/wide_binding.dart';
-import 'package:ulangan_pak_aji/pages/DashboardPage.dart';
 
 import 'package:ulangan_pak_aji/pages/addTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
@@ -50,10 +50,18 @@ class AppPage {
     GetPage(
       name: AppRoutes.Editpage,
       page: () => Edittodopage(),
-      bindings: [ResponsiveBinding()],
+      bindings: [ResponsiveBinding(), Editbinding()],
     ),
-    GetPage(name: AppRoutes.EditWidepage, page: () => Editwide()),
-    GetPage(name: AppRoutes.EditMobilepage, page: () => EditTodoMobile()),
+    GetPage(
+      name: AppRoutes.EditWidepage,
+      page: () => Editwide(),
+      binding: Editbinding(),
+    ),
+    GetPage(
+      name: AppRoutes.EditMobilepage,
+      page: () => EditTodoMobile(),
+      binding: Editbinding(),
+    ),
 
     GetPage(
       name: AppRoutes.Profillepage,

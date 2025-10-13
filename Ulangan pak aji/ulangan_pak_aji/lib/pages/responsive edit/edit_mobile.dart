@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
+import 'package:ulangan_pak_aji/controller/editcontroller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
-import 'package:ulangan_pak_aji/controller/editController.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 
@@ -16,38 +15,31 @@ class EditTodoMobile extends StatefulWidget {
 }
 
 class _EditTodoMobileState extends State<EditTodoMobile> {
-  String? selectedValue;
-  DateTime? selectedDate;
-
   late DateController dateC;
-  late EditTodoController editController;
+  late DropDownController dropdownC;
+  late Editcontroller editController;
   late HomeController homeC;
-  late DropDownController dropdownc;
+
   late int index;
-  late dynamic todo;
+  late Map<String, dynamic> todo;
 
   @override
   void initState() {
     super.initState();
+    dateC = Get.find<DateController>();
+    dropdownC = Get.find<DropDownController>();
+    editController = Get.put(Editcontroller());
+    homeC = Get.find<HomeController>();
 
     final args = Get.arguments as Map<String, dynamic>;
     index = args['index'];
     todo = args['todo'];
 
-    //Controllers
-    editController = Get.put(EditTodoController());
-    homeC = Get.find<HomeController>();
-    dropdownc = Get.find<DropDownController>();
-    dateC = Get.find<DateController>();
-
-    //Set values
     editController.setTodo(index, todo);
-    selectedValue = todo.category;
-    selectedDate = todo.dueDate;
-
-    if (selectedDate != null) {
-      dateC.dateController.text = editController.formatDate(selectedDate);
-    }
+    dropdownC.selectedValue.value = todo['category'] ?? '';
+    dateC.dateController.text = editController.formatDate(
+      editController.parseDate(todo['dueDate']),
+    );
   }
 
   Widget _buildTextField(String label, TextEditingController controller) {
@@ -115,6 +107,7 @@ class _EditTodoMobileState extends State<EditTodoMobile> {
             _buildTextField("Title", editController.titleController),
             _buildTextField("Desc", editController.descController),
 
+            // Due Date Picker
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               child: ReuseTextField(
@@ -131,57 +124,44 @@ class _EditTodoMobileState extends State<EditTodoMobile> {
               ),
             ),
 
+            // Dropdown Category
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               child: Obx(
-                () => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: AppColors.neon, width: 2),
-                    ),
+                () => DropdownButton<String>(
+                  dropdownColor: AppColors.background,
+                  value: dropdownC.selectedValue.value.isNotEmpty
+                      ? dropdownC.selectedValue.value
+                      : null,
+                  hint: const Text(
+                    "Pilih Kategori",
+                    style: TextStyle(color: AppColors.textLight),
                   ),
-                  child: Obx(
-                    () => DropdownButton<String>(
-                      dropdownColor: AppColors.background,
-                      value:
-                          dropdownc.pilihan.contains(
-                            dropdownc.selectedValue.value,
-                          )
-                          ? dropdownc.selectedValue.value
-                          : null, // ✅ hindari value tidak ada di list
-                      hint: const Text(
-                        "Pilih Kategori",
-                        style: TextStyle(color: AppColors.textLight),
-                      ),
-                      isExpanded: true,
-                      underline: const SizedBox(),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: AppColors.textLight,
-                      ),
-                      items: dropdownc.pilihan
-                          .map(
-                            (item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  color: AppColors.textLight,
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        dropdownc.setSelected(value ?? '');
-                      },
-                    ),
+                  isExpanded: true,
+                  underline: Container(height: 2, color: AppColors.neon),
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.textLight,
                   ),
+                  items: dropdownC.pilihan
+                      .map(
+                        (item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(color: AppColors.textLight),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    dropdownC.setSelected(value ?? '');
+                  },
                 ),
               ),
             ),
 
+            // Checkbox
             Container(
               margin: const EdgeInsets.only(bottom: 24),
               child: Row(
@@ -206,23 +186,18 @@ class _EditTodoMobileState extends State<EditTodoMobile> {
               ),
             ),
 
+            // Buttons
             _buildButton(
               text: "Update",
               color: AppColors.textLight,
               textColor: AppColors.background,
-              onPressed: () {
-                homeC.updateList(
-                  index,
-                  editController.titleController.text,
-                  editController.descController.text,
-                  editController.isDone.value,
-                  selectedValue ?? todo.category,
-                  dateC.selectedDate.value,
+              onPressed: () async {
+                await editController.updateTodo(
+                  category: dropdownC.selectedValue.value,
+                  dueDate: dateC.selectedDate.value,
                 );
-                Get.back();
               },
             ),
-
             _buildButton(
               text: "Delete",
               color: AppColors.red,

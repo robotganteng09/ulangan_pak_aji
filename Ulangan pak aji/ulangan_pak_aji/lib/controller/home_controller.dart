@@ -5,6 +5,7 @@ import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/history_controller.dart';
 
 import 'package:ulangan_pak_aji/db_helper.dart';
+import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
 class HomeController extends GetxController {
   var todolist = <Map<String, dynamic>>[].obs;
@@ -98,26 +99,23 @@ class HomeController extends GetxController {
       'dueDate': newDueDateString,
     });
 
-    // 2. UPDATE NILAI LOKAL (Mencegah 'Unsupported operation: read-only')
-    // Alih-alih mengganti seluruh Map, kita perbarui key-value-nya:
     todo['title'] = newtitle;
     todo['description'] = newDescription;
     todo['category'] = newCategory;
     todo['isDone'] = newIsDoneValue;
     todo['dueDate'] = newDueDateString;
 
-    // 3. LOGIKA PEMINDAHAN (Sama seperti toggleDoneStatus)
     if (newisDone) {
       // Hapus dari list aktif dan muat ulang riwayat
       todolist.removeAt(index);
       await historyController.loadHistoryTodos();
 
       Get.snackbar(
-        'Diperbarui & Selesai! 🎉',
+        'Diperbarui',
         'Aktivitas "$newtitle" telah dipindahkan ke Riwayat.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.blue.withOpacity(0.8),
-        colorText: Colors.white,
+        backgroundColor: AppColors.neon,
+        colorText: AppColors.textLight,
       );
     } else {
       // Jika tidak dipindahkan, hanya refresh list aktif
@@ -132,15 +130,6 @@ class HomeController extends GetxController {
 
     await dbHelper.deleteTodo(id);
     todolist.removeAt(index);
-
-    Get.snackbar(
-      'Berhasil',
-      'Aktivitas "${todo['title']}" telah dihapus.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor:
-          Get.theme.snackBarTheme.backgroundColor?.withOpacity(0.8) ??
-          const Color(0xFF333333),
-    );
   }
 
   // 🔹 Clear form input
