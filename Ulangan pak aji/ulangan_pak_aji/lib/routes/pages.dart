@@ -15,6 +15,7 @@ import 'package:ulangan_pak_aji/pages/editTodoPage.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20add/addTodo_mobile.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20add/addTodo_wide.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20dashboard/Dashboard_mobile.dart';
+import 'package:ulangan_pak_aji/pages/responsive%20dashboard/Dashboard_wide.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20edit/edit_Wide.dart';
 import 'package:ulangan_pak_aji/pages/responsive%20edit/edit_mobile.dart';
 import 'package:ulangan_pak_aji/pages/HistoryPage.dart';
@@ -79,8 +80,18 @@ class AppPage {
       binding: Loginbinding(),
     ),
     GetPage(
-      name: AppRoutes.DashboardPage,
+      name: AppRoutes.DashboardMobilePage,
       page: () => DashboardMobile(),
+      bindings: [
+        Dashboardbinding(),
+        Homebinding(),
+        Historybinding(),
+        ResponsiveBinding(),
+      ],
+    ),
+    GetPage(
+      name: AppRoutes.DashboardWidePage,
+      page: () => DashboardWide(),
       bindings: [
         Dashboardbinding(),
         Homebinding(),
