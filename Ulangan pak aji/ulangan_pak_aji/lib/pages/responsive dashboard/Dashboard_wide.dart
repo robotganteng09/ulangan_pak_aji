@@ -1,91 +1,115 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ulangan_pak_aji/routes/route.dart';
+import 'package:ulangan_pak_aji/controller/dashboard_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
-/// Widget gabungan untuk Drawer + Tombol Burger Menu
 class DashboardWide extends StatelessWidget {
-  const DashboardWide({super.key});
+  DashboardWide({super.key});
+
+  final dashboardController = Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // 🔹 Drawer (sisi kiri)
-      drawer: Drawer(
-        backgroundColor: const Color(0xFF1A1A1A),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: AppColors.neon.withOpacity(0.2)),
-              child: const Text(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          backgroundColor: AppColors.background,
+          elevation: 0,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu, color: AppColors.neon),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
+          title: Text(
+            [
+              "Home",
+              "History",
+              "Profile",
+            ][dashboardController.selectedIndex.value],
+            style: const TextStyle(
+              color: AppColors.neon,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+        ),
+        drawer: _NavDrawer(),
+        body:
+            dashboardController.pages[dashboardController.selectedIndex.value],
+      ),
+    );
+  }
+}
+
+class _NavDrawer extends StatelessWidget {
+  final dashboardController = Get.find<DashboardController>();
+
+  _NavDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: const Color(0xFF1A1A1A),
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: AppColors.neon.withOpacity(0.15)),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
                 'Menu',
                 style: TextStyle(
                   color: AppColors.neon,
-                  fontSize: 24,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text(
-                'Beranda',
-                style: TextStyle(color: Colors.white),
-              ),
-              onTap: () {
-                Get.back(); // Menutup drawer
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person, color: Colors.white),
-              title: const Text(
-                'Profile',
-                style: TextStyle(color: Colors.white),
-              ),
-              onTap: () {
-                Get.toNamed(AppRoutes.Profillepage);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info, color: Colors.white),
-              title: const Text(
-                'Tentang Aplikasi',
-                style: TextStyle(color: Colors.white),
-              ),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
-
-      // 🔹 AppBar dengan tombol burger menu
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.neon),
-            onPressed: () => Scaffold.of(context).openDrawer(), // buka drawer
           ),
-        ),
-        title: const Text(
-          "Menu Utama",
-          style: TextStyle(
-            color: AppColors.neon,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
+          _drawerItem(icon: Icons.home, title: "Home", index: 0),
+          _drawerItem(icon: Icons.history, title: "History", index: 1),
+          _drawerItem(icon: Icons.person, title: "Profile", index: 2),
+          const Divider(color: Colors.grey, thickness: 0.3),
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.redAccent),
+            title: const Text(
+              "Logout",
+              style: TextStyle(color: Colors.redAccent),
+            ),
+            onTap: () => Get.back(),
           ),
-        ),
-      ),
-
-      // 🔹 Konten utama (bisa kamu ganti sesuai kebutuhan)
-      body: const Center(
-        child: Text(
-          "Konten halaman di sini",
-          style: TextStyle(color: Colors.white),
-        ),
+        ],
       ),
     );
+  }
+
+  Widget _drawerItem({
+    required IconData icon,
+    required String title,
+    required int index,
+  }) {
+    return Obx(() {
+      final isSelected = dashboardController.selectedIndex.value == index;
+      return ListTile(
+        leading: Icon(
+          icon,
+          color: isSelected ? AppColors.neon : Colors.white70,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: isSelected ? AppColors.neon : Colors.white70,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
+        onTap: () {
+          dashboardController.changeTab(index);
+          Get.back(); // tutup drawer
+        },
+      );
+    });
   }
 }
