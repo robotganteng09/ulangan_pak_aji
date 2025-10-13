@@ -25,8 +25,10 @@ class HomeController extends GetxController {
 
   // 🔹 Load dari DB
   Future<void> loadTodos() async {
-    final data = await dbHelper.getTodos();
-    todolist.value = data; // langsung assign list<Map<String, dynamic>>
+    final data = await dbHelper.getPendingTodos();
+
+    // SOLUSI: Konversi setiap QueryRow menjadi Map<String, dynamic> yang sederhana
+    todolist.value = data.map((row) => Map<String, dynamic>.from(row)).toList();
   }
 
   // 🔹 Tambah Data
@@ -54,6 +56,25 @@ class HomeController extends GetxController {
     clearForm();
   }
 
+  Future<void> toggleDoneStatus(int index) async {
+    final todo = Map<String, dynamic>.from(todolist[index]);
+    final id = todo['id'];
+    final currentIsDone = todo['isDone'] == 1;
+
+    final newIsDoneValue = currentIsDone ? 0 : 1;
+
+    await dbHelper.updateTodo(id, {'isDone': newIsDoneValue});
+
+    todo['isDone'] = newIsDoneValue;
+
+    if (newIsDoneValue == 1) {
+      todolist.removeAt(index);
+    } else {
+      todolist[index] = todo;
+    }
+    await historyController.loadHistoryTodos();
+  }
+
   // 🔹 Update Data
   Future<void> updateList(
     int index,
@@ -65,26 +86,43 @@ class HomeController extends GetxController {
   ) async {
     final todo = todolist[index];
     final id = todo['id'];
+    final newIsDoneValue = newisDone ? 1 : 0;
+    final newDueDateString = newDueDate?.toIso8601String() ?? '';
 
+    // 1. UPDATE DATABASE
     await dbHelper.updateTodo(id, {
       'title': newtitle,
       'description': newDescription,
       'category': newCategory,
-      'isDone': newisDone ? 1 : 0,
-      'dueDate': newDueDate?.toIso8601String() ?? '',
+      'isDone': newIsDoneValue,
+      'dueDate': newDueDateString,
     });
 
-    // Update nilai lokal
-    todolist[index] = {
-      'id': id,
-      'title': newtitle,
-      'description': newDescription,
-      'category': newCategory,
-      'isDone': newisDone ? 1 : 0,
-      'dueDate': newDueDate?.toIso8601String() ?? '',
-    };
+    // 2. UPDATE NILAI LOKAL (Mencegah 'Unsupported operation: read-only')
+    // Alih-alih mengganti seluruh Map, kita perbarui key-value-nya:
+    todo['title'] = newtitle;
+    todo['description'] = newDescription;
+    todo['category'] = newCategory;
+    todo['isDone'] = newIsDoneValue;
+    todo['dueDate'] = newDueDateString;
 
-    todolist.refresh();
+    // 3. LOGIKA PEMINDAHAN (Sama seperti toggleDoneStatus)
+    if (newisDone) {
+      // Hapus dari list aktif dan muat ulang riwayat
+      todolist.removeAt(index);
+      await historyController.loadHistoryTodos();
+
+      Get.snackbar(
+        'Diperbarui & Selesai! 🎉',
+        'Aktivitas "$newtitle" telah dipindahkan ke Riwayat.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.blue.withOpacity(0.8),
+        colorText: Colors.white,
+      );
+    } else {
+      // Jika tidak dipindahkan, hanya refresh list aktif
+      todolist.refresh();
+    }
   }
 
   // 🔹 Hapus Data

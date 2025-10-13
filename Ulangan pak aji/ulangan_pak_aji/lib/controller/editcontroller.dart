@@ -13,9 +13,10 @@ class EditTodoController extends GetxController {
 
   void setTodo(int index, dynamic todo) {
     currentIndex = index;
-    titleController.text = todo.Title ?? "";
-    descController.text = todo.Description ?? "";
-    isDone.value = todo.isDone ?? false;
+    titleController.text = todo['title'] ?? "";
+
+    descController.text = todo['description'] ?? "";
+    isDone.value = todo['isDone'] == 1;
   }
 
   String formatDate(DateTime? date) {

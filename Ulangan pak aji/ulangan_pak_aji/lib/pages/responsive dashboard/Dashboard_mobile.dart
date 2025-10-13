@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/dashboard_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 
-class Dashboard extends StatelessWidget {
-  Dashboard({super.key});
+class DashboardMobile extends StatelessWidget {
+  DashboardMobile({super.key});
 
   final dashboardController = Get.find<DashboardController>();
 

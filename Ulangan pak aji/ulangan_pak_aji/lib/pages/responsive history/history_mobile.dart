@@ -27,7 +27,7 @@ class HistoryMobile extends StatelessWidget {
         ),
       ),
       body: Obx(() {
-        if (historyController.completedList.isEmpty) {
+        if (historyController.historyList.isEmpty) {
           return Center(
             child: Text(
               "Belum ada todo",
@@ -41,8 +41,7 @@ class HistoryMobile extends StatelessWidget {
           // Since the list items are identical, it is assumed they are for the same time,
           // matching the single "11:01AM" chip in the image.
           itemCount:
-              historyController.completedList.length +
-              1, // +1 for the time chip
+              historyController.historyList.length + 1, // +1 for the time chip
           padding: const EdgeInsets.only(
             top: 0,
             left: 12,
@@ -77,7 +76,7 @@ class HistoryMobile extends StatelessWidget {
               );
             }
 
-            final todo = historyController.completedList[index - 1];
+            final todo = historyController.historyList[index - 1];
             return Container(
               margin: const EdgeInsets.only(bottom: 15),
               decoration: BoxDecoration(
@@ -94,7 +93,7 @@ class HistoryMobile extends StatelessWidget {
                   child: const Icon(Icons.check, color: Colors.black, size: 20),
                 ),
                 title: Text(
-                  todo.Title,
+                  todo['title'] ?? 'No Title',
                   style: TextStyle(
                     color: AppColors.textLight,
                     fontWeight: FontWeight.bold,
@@ -102,13 +101,13 @@ class HistoryMobile extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  todo.Description,
+                  todo['description'] ?? 'No Description',
                   style: TextStyle(color: AppColors.textGrey),
                 ),
                 trailing: IconButton(
                   iconSize: 22,
                   onPressed: () {
-                    historyController.deleteHistory(todo);
+                    historyController.deleteHistory(todo['id'], todo['title']);
                   },
                   icon: const Icon(Icons.delete, color: Colors.redAccent),
                 ),

@@ -5,6 +5,7 @@ import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
+import 'package:ulangan_pak_aji/controller/time_controller.dart';
 
 class Homebinding extends Bindings {
   @override
@@ -12,5 +13,6 @@ class Homebinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<DropDownController>(() => DropDownController());
     Get.lazyPut<DateController>(() => DateController());
+    Get.lazyPut<TimeController>(() => TimeController());
   }
 }
