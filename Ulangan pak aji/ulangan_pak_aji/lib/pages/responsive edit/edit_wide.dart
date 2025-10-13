@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
-import 'package:ulangan_pak_aji/controller/home_controller.dart';
-import 'package:ulangan_pak_aji/controller/editController.dart';
+import 'package:ulangan_pak_aji/controller/editcontroller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 
@@ -14,25 +13,37 @@ class Editwide extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateC = Get.find<DateController>();
     final dropdownC = Get.find<DropDownController>();
-    final homeC = Get.find<HomeController>();
-    final editC = Get.find<EditTodoController>();
+    final editC = Get.put(Editcontroller());
 
     final args = Get.arguments as Map<String, dynamic>;
     final index = args['index'];
-    final todo = args['todo'];
+    final todo = args['todo'] as Map<String, dynamic>;
 
+    // Set nilai awal
     editC.setTodo(index, todo);
-    dropdownC.selectedValue.value = todo.category;
-    dateC.dateController.text = editC.formatDate(todo.dueDate);
+
+    // Validasi kategori agar tidak menyebabkan error
+    if (dropdownC.pilihan.contains(todo['category'])) {
+      dropdownC.selectedValue.value = todo['category'];
+    } else {
+      dropdownC.selectedValue.value = '';
+    }
+
+    dateC.dateController.text = editC.formatDate(
+      editC.parseDate(todo['dueDate']),
+    );
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
-        leading: const Icon(Icons.arrow_back, color: AppColors.neon),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: AppColors.neon),
+          onPressed: () => Get.back(),
+        ),
         title: const Text(
-          "Eddit Activities",
+          "Edit Activities",
           style: TextStyle(color: AppColors.neon, fontWeight: FontWeight.bold),
         ),
       ),
@@ -41,7 +52,7 @@ class Editwide extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // LEFT SIDE (Title, Desc, Date)
+            // LEFT SIDE
             Expanded(
               flex: 3,
               child: Column(
@@ -81,7 +92,7 @@ class Editwide extends StatelessWidget {
 
             const SizedBox(width: 40),
 
-            // RIGHT SIDE (Priority, Checkbox, Buttons)
+            // RIGHT SIDE
             Expanded(
               flex: 2,
               child: Column(
@@ -96,6 +107,8 @@ class Editwide extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
+
+                  // Dropdown Priority
                   Obx(
                     () => Container(
                       width: double.infinity,
@@ -113,11 +126,20 @@ class Editwide extends StatelessWidget {
                       child: DropdownButton<String>(
                         isExpanded: true,
                         dropdownColor: AppColors.background,
-                        value: dropdownC.selectedValue.value.isEmpty
-                            ? todo.category
-                            : dropdownC.selectedValue.value,
+                        // ✅ Pastikan hanya nilai yang valid digunakan
+                        value:
+                            dropdownC.pilihan.contains(
+                              dropdownC.selectedValue.value,
+                            )
+                            ? dropdownC.selectedValue.value
+                            : (dropdownC.pilihan.contains(todo['category'])
+                                  ? todo['category']
+                                  : null),
                         underline: const SizedBox(),
-                        icon: const SizedBox(), // no suffix icon
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.textLight,
+                        ),
                         style: const TextStyle(color: AppColors.textLight),
                         items: dropdownC.pilihan
                             .map(
@@ -135,6 +157,8 @@ class Editwide extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 20),
+
+                  // Checkbox
                   Obx(
                     () => Row(
                       children: [
@@ -158,17 +182,14 @@ class Editwide extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 30),
+
+                  // Button Update
                   ElevatedButton(
-                    onPressed: () {
-                      homeC.updateList(
-                        index,
-                        editC.titleController.text,
-                        editC.descController.text,
-                        editC.isDone.value,
-                        dropdownC.selectedValue.value,
-                        dateC.selectedDate.value,
+                    onPressed: () async {
+                      await editC.updateTodo(
+                        category: dropdownC.selectedValue.value,
+                        dueDate: dateC.selectedDate.value,
                       );
-                      Get.back();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.neon,
@@ -188,6 +209,8 @@ class Editwide extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 12),
+
+                  // Button Delete
                   ElevatedButton(
                     onPressed: editC.deleteTodo,
                     style: ElevatedButton.styleFrom(
