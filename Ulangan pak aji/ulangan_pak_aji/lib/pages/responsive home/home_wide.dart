@@ -125,7 +125,7 @@ class HomeWide extends StatelessWidget {
                         child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 20,
-                            vertical: 12,
+                            vertical: 10,
                           ),
                           title: Text(
                             title,
@@ -138,7 +138,7 @@ class HomeWide extends StatelessWidget {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 4),
                               Text(
                                 description,
                                 style: TextStyle(
@@ -147,16 +147,22 @@ class HomeWide extends StatelessWidget {
                                 ),
                               ),
                               if (category.isNotEmpty) ...[
-                                const SizedBox(height: 6),
-                                Text(
-                                  "Category: ${category.toUpperCase()}",
-                                  style: TextStyle(
-                                    color: AppColors.textGrey,
-                                    fontSize: 12,
+                                const SizedBox(height: 4),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  child: Text(
+                                    "Category: ${category.toUpperCase()}",
+                                    style: TextStyle(
+                                      color: AppColors.textGrey,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
                               ],
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 8),
                               Text(
                                 dueDate != null
                                     ? "Due: ${DateFormat('d MMMM yyyy').format(dueDate)}"
@@ -181,8 +187,8 @@ class HomeWide extends StatelessWidget {
                               );
                             },
                             child: Container(
-                              width: 36,
-                              height: 36,
+                              width: 40,
+                              height: 40,
                               decoration: BoxDecoration(
                                 color: isDone
                                     ? AppColors.neon
@@ -196,7 +202,7 @@ class HomeWide extends StatelessWidget {
                               child: Icon(
                                 Icons.check,
                                 color: isDone ? Colors.black : AppColors.neon,
-                                size: 22,
+                                size: 28,
                               ),
                             ),
                           ),

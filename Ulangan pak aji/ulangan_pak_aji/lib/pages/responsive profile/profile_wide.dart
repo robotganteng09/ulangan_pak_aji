@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ulangan_pak_aji/controller/login_controller.dart';
-import 'package:ulangan_pak_aji/widgets/buttonReusable.dart';
-import '/widgets/profile_card.dart';
+import '/controller/login_controller.dart';
 import '/widgets/app_colors.dart';
+import '/widgets/profile_card.dart';
+import '/widgets/buttonReusable.dart';
 
-class ProfilleWide extends StatelessWidget {
-  ProfilleWide({super.key});
+class ProfileWide extends StatelessWidget {
+  ProfileWide({super.key});
 
   final LoginController loginController = Get.find<LoginController>();
 
@@ -19,7 +19,7 @@ class ProfilleWide extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
           child: Stack(
             children: [
-              // 🔹 Teks "Profile" di kanan atas
+              // 🔹 Judul "Profile" kanan atas
               const Positioned(
                 top: 0,
                 right: 0,
@@ -27,41 +27,53 @@ class ProfilleWide extends StatelessWidget {
                   "Profile",
                   style: TextStyle(
                     color: AppColors.neon,
-                    fontSize: 26,
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
 
-              // 🔹 Dua kartu profil di tengah
+              // 🔹 Isi Utama (dua kartu di tengah)
               Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    ProfileCard(
-                      username: "Narendra/20/XI PPLG 2",
-                      imagePath: "assets/image/naren.jpg",
-                      subtext: "Kata kata hari ini",
-                      compact: true,
-                    ),
-                    SizedBox(width: 60),
-                    ProfileCard(
-                      username: "Arsya/9/IX PPLG 2",
-                      imagePath: "assets/image/arsya.jpg",
-                      subtext: "Kata kata hari ini",
-                      compact: true,
-                    ),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = constraints.maxWidth < 700;
+                    final children = const [
+                      ProfileCard(
+                        username: "Narendra / 20 / XI PPLG 2",
+                        imagePath: "assets/image/naren.jpg",
+                        subtext: "Kata kata hari ini",
+                        compact: true,
+                      ),
+                      SizedBox(width: 60, height: 40),
+                      ProfileCard(
+                        username: "Arsya / 9 / IX PPLG 2",
+                        imagePath: "assets/image/arsya.jpg",
+                        subtext: "Kata kata hari ini",
+                        compact: true,
+                      ),
+                    ];
+
+                    return isMobile
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: children,
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: children,
+                          );
+                  },
                 ),
               ),
 
-              // 🔹 Tombol LOG OUT di kanan bawah
+              // 🔹 Tombol Logout kanan bawah
               Positioned(
                 bottom: 35,
                 right: 30,
                 child: SizedBox(
-                  width: 130,
-                  height: 42,
+                  width: 150,
+                  height: 45,
                   child: CustomButton(
                     text: "LOG OUT",
                     backgroundColor: Colors.red,
