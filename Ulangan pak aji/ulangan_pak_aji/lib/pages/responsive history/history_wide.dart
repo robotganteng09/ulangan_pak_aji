@@ -10,24 +10,11 @@ class HistoryWide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Lebar maksimum tampilan list di layar besar
     const double maxListWidth = 700.0;
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        title: Text(
-          "History",
-          style: TextStyle(
-            color: AppColors.neon,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
-        centerTitle: false,
-      ),
+      appBar: AppBar(backgroundColor: AppColors.background),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: maxListWidth),
@@ -35,7 +22,7 @@ class HistoryWide extends StatelessWidget {
             if (historyController.historyList.isEmpty) {
               return Center(
                 child: Text(
-                  "Belum ada todo",
+                  "Belum ada yang selesai nih\n ayo semangat",
                   style: TextStyle(color: AppColors.textGrey, fontSize: 16),
                 ),
               );

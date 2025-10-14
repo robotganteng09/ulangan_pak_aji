@@ -19,14 +19,7 @@ class HomeMobile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
-        title: Text(
-          "Your Activities",
-          style: TextStyle(
-            color: AppColors.neon,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
+        // 🔹 title dihapus
         centerTitle: true,
         actions: [
           IconButton(
@@ -36,9 +29,10 @@ class HomeMobile extends StatelessWidget {
             icon: Icon(Icons.history, color: AppColors.neon, size: 28),
             tooltip: 'History',
           ),
-          const SizedBox(width: 10),
+          Padding(padding: EdgeInsets.only(right: 10)),
         ],
       ),
+
       body: Column(
         children: [
           Padding(
@@ -87,7 +81,6 @@ class HomeMobile extends StatelessWidget {
                           final todo = homeController.todolist[index];
                           final isDone = todo['isDone'] == 1;
 
-                          // Parse tanggal dari string
                           DateTime? dueDate;
                           if (todo['dueDate'] != null &&
                               todo['dueDate'].toString().isNotEmpty) {
@@ -116,72 +109,76 @@ class HomeMobile extends StatelessWidget {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // Bagian kiri: teks
+                                    // Kolom kiri teks
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // 🔹 Judul dan kategori
-                                          // 🔹 Judul dan kategori
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Flexible(
-                                                child: Text(
-                                                  todo['title'] ?? 'Untitled',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: AppColors.textLight,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                  horizontal: 16,
-                                                  vertical:
-                                                      8, // 🔽 dikurangi sedikit agar proporsional
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.neon
-                                                      .withOpacity(0.15),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
-                                                child: Text(
-                                                  "Category: ${(todo['category'] ?? '').toString().toUpperCase()}",
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.neon,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 4,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Flexible(
+                                                  child: Text(
+                                                    todo['title'] ?? 'Untitled',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color:
+                                                          AppColors.textLight,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-
-                                          const SizedBox(
-                                            height: 2,
-                                          ), // 🔽 jarak antar judul & deskripsi diperkecil
-                                          // 🔹 Deskripsi
-                                          Text(
-                                            todo['description'] ?? '',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: AppColors.textGrey,
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8,
+                                                      ),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.neon
+                                                        .withOpacity(0.15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          5,
+                                                        ),
+                                                  ),
+                                                  child: Text(
+                                                    "Category: ${(todo['category'] ?? '').toString().toUpperCase()}",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: AppColors.neon,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-
-                                          const SizedBox(
-                                            height: 6,
-                                          ), // 🔼 jarak ke tanggal sedikit lebih besar biar tetap rapi
-                                          // 🔹 Tanggal jatuh tempo
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 4,
+                                            ),
+                                            child: Text(
+                                              todo['description'] ?? '',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: AppColors.textGrey,
+                                              ),
+                                            ),
+                                          ),
                                           Text(
                                             dueDate != null
                                                 ? "Due: ${DateFormat('d MMMM yyyy').format(dueDate)}"
@@ -196,42 +193,45 @@ class HomeMobile extends StatelessWidget {
                                       ),
                                     ),
 
-                                    const SizedBox(width: 15),
-
-                                    // 🔹 Tombol ceklis
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: isDone
-                                            ? AppColors.neon
-                                            : Colors.transparent,
-                                        border: isDone
-                                            ? null
-                                            : Border.all(
-                                                color: AppColors.neon,
-                                                width: 2,
-                                              ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          homeController.updateList(
-                                            index,
-                                            todo['title'] ?? '',
-                                            todo['description'] ?? '',
-                                            !isDone,
-                                            todo['category'] ?? '',
-                                            dueDate,
-                                          );
-                                        },
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.check,
-                                            color: isDone
-                                                ? Colors.black
-                                                : AppColors.neon,
-                                            size: 28,
+                                    // checklist
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 15),
+                                      child: Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: isDone
+                                              ? AppColors.neon
+                                              : Colors.transparent,
+                                          border: isDone
+                                              ? null
+                                              : Border.all(
+                                                  color: AppColors.neon,
+                                                  width: 2,
+                                                ),
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            homeController.updateList(
+                                              index,
+                                              todo['title'] ?? '',
+                                              todo['description'] ?? '',
+                                              !isDone,
+                                              todo['category'] ?? '',
+                                              dueDate,
+                                            );
+                                          },
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.check,
+                                              color: isDone
+                                                  ? Colors.black
+                                                  : AppColors.neon,
+                                              size: 28,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -249,8 +249,8 @@ class HomeMobile extends StatelessWidget {
         ],
       ),
 
-      // 🔹 Tombol tambah
-      floatingActionButton: Container(
+      // Tombol tambah
+      floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FloatingActionButton(
           shape: RoundedRectangleBorder(

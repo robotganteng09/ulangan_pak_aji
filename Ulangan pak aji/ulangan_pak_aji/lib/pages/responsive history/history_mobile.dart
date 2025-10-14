@@ -12,23 +12,12 @@ class HistoryMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        title: Text(
-          "History",
-          style: TextStyle(
-            color: AppColors.neon,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
-      ),
+      appBar: AppBar(backgroundColor: AppColors.background),
       body: Obx(() {
         if (historyController.historyList.isEmpty) {
           return Center(
             child: Text(
-              "Belum ada todo",
+              "Belum ada yang selesai nih\n ayo semangat",
               style: TextStyle(color: AppColors.textGrey, fontSize: 16),
             ),
           );

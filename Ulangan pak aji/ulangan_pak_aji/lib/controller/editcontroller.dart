@@ -15,7 +15,7 @@ class Editcontroller extends GetxController {
 
   final DBHelper dbHelper = DBHelper();
 
-  /// Set data awal dari todo
+  //Set data awal
   void setTodo(int index, Map<String, dynamic> todo) {
     currentIndex = index;
     currentId = todo['id'];
@@ -24,13 +24,12 @@ class Editcontroller extends GetxController {
     isDone.value = todo['isDone'] == 1;
   }
 
-  /// Format tanggal menjadi string cantik
   String formatDate(DateTime? date) {
     if (date == null) return "";
     return DateFormat('dd MMMM yyyy', 'id_ID').format(date);
   }
 
-  /// Parse string tanggal dari database ke DateTime
+  //Parse tanggal dari database ke DateTime
   DateTime? parseDate(dynamic dateStr) {
     if (dateStr == null || dateStr.toString().isEmpty) return null;
     try {
@@ -40,7 +39,7 @@ class Editcontroller extends GetxController {
     }
   }
 
-  /// 🟢 Update Todo di database
+  //Update Todo di database
   Future<void> updateTodo({
     required String category,
     required DateTime? dueDate,
@@ -57,12 +56,11 @@ class Editcontroller extends GetxController {
 
     await dbHelper.updateTodo(currentId!, data);
 
-    // 🔄 Refresh hanya todo yang belum selesai di Home
+    // Refresh
     final homeC = Get.find<HomeController>();
     homeC.todolist.value = await dbHelper.getPendingTodos();
     homeC.todolist.refresh();
 
-    // 🔄 Refresh halaman History agar selesai langsung muncul di sana
     if (Get.isRegistered<HistoryController>()) {
       final historyC = Get.find<HistoryController>();
       await historyC.loadHistoryTodos();
@@ -71,17 +69,17 @@ class Editcontroller extends GetxController {
     Get.back();
   }
 
-  /// 🔴 Hapus Todo dari database
+  //delete Todo
   void deleteTodo() async {
     if (currentId != null) {
       await dbHelper.deleteTodo(currentId!);
 
-      // Refresh Home list
+      //Refresh
       final homeC = Get.find<HomeController>();
       homeC.todolist.value = await dbHelper.getPendingTodos();
       homeC.todolist.refresh();
 
-      // Refresh History jika terbuka
+      // Refresh History
       if (Get.isRegistered<HistoryController>()) {
         final historyC = Get.find<HistoryController>();
         await historyC.loadHistoryTodos();

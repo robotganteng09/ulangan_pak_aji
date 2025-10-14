@@ -2,7 +2,7 @@ import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class DropDownController extends GetxController {
-  var selectedValue = ''.obs; // tetap pakai RxString
+  var selectedValue = ''.obs;
   final List<String> pilihan = ['Sangat Penting', 'Penting', 'Bisa Nanti'];
 
   void setSelected(String value) {
@@ -10,6 +10,6 @@ class DropDownController extends GetxController {
   }
 
   void clear() {
-    selectedValue.value = ''; // reset ke kosong
+    selectedValue.value = '';
   }
 }
