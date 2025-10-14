@@ -15,7 +15,6 @@ class LoginpageWide extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Row(
         children: [
-          // 🟩 LEFT SIDE
           Expanded(
             child: Container(
               color: Colors.grey[900],
@@ -25,7 +24,7 @@ class LoginpageWide extends StatelessWidget {
                   Icon(Icons.account_circle, color: AppColors.neon, size: 90),
                   const SizedBox(height: 16),
                   Text(
-                    "Welcome Back\nto Ulangan Pak Aji",
+                    "Welcome Back",
                     style: TextStyle(
                       color: AppColors.textLight,
                       fontSize: 22,
@@ -49,7 +48,6 @@ class LoginpageWide extends StatelessWidget {
             ),
           ),
 
-          // 🟦 RIGHT SIDE
           Expanded(
             child: Center(
               child: Container(
@@ -77,7 +75,6 @@ class LoginpageWide extends StatelessWidget {
                       ),
                     ),
 
-                    // 🔸 Semua input & tombol dibungkus di dalam Container
                     Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 20,
@@ -85,7 +82,6 @@ class LoginpageWide extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          // Username field
                           ReuseTextField(
                             label: "Username",
                             controller: logincontroller.txtUser,
@@ -96,7 +92,6 @@ class LoginpageWide extends StatelessWidget {
                             labelColor: AppColors.textGrey,
                           ),
 
-                          // Password field
                           ReuseTextField(
                             label: "Password",
                             controller: logincontroller.txtPassword,
@@ -108,7 +103,6 @@ class LoginpageWide extends StatelessWidget {
                             labelColor: AppColors.textGrey,
                           ),
 
-                          // Sign in button
                           CustomButton(
                             text: "Sign In",
                             backgroundColor: AppColors.neon,
@@ -119,7 +113,6 @@ class LoginpageWide extends StatelessWidget {
                       ),
                     ),
 
-                    // Sign up text
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: Text.rich(

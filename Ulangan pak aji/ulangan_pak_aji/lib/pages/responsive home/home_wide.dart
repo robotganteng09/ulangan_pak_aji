@@ -20,14 +20,7 @@ class HomeWide extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
-        title: const Text(
-          "Your Activities",
-          style: TextStyle(
-            color: AppColors.neon,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
+        // 🔹 title dihapus
         centerTitle: false,
         actions: [
           Container(
@@ -54,7 +47,7 @@ class HomeWide extends StatelessWidget {
             () => ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               children: [
-                // JAM REALTIME
+                // jam
                 Padding(
                   padding: const EdgeInsets.only(top: 40, bottom: 40),
                   child: Center(
@@ -70,7 +63,7 @@ class HomeWide extends StatelessWidget {
                   ),
                 ),
 
-                // JIKA TODO LIST KOSONG
+                // if list empty
                 if (homeController.todolist.isEmpty)
                   Center(
                     child: Padding(

@@ -24,15 +24,14 @@ class HomeController extends GetxController {
     loadTodos();
   }
 
-  // 🔹 Load dari DB
+  //load db
   Future<void> loadTodos() async {
     final data = await dbHelper.getPendingTodos();
 
-    // SOLUSI: Konversi setiap QueryRow menjadi Map<String, dynamic> yang sederhana
     todolist.value = data.map((row) => Map<String, dynamic>.from(row)).toList();
   }
 
-  // 🔹 Tambah Data
+  //add
   Future<void> addList(
     String title,
     String description,
@@ -51,7 +50,7 @@ class HomeController extends GetxController {
       'dueDate': due,
     });
 
-    // Reload list
+    //relod
     await loadTodos();
 
     clearForm();
@@ -76,7 +75,7 @@ class HomeController extends GetxController {
     await historyController.loadHistoryTodos();
   }
 
-  // 🔹 Update Data
+  //update list terbaru
   Future<void> updateList(
     int index,
     String newtitle,
@@ -90,7 +89,7 @@ class HomeController extends GetxController {
     final newIsDoneValue = newisDone ? 1 : 0;
     final newDueDateString = newDueDate?.toIso8601String() ?? '';
 
-    // 1. UPDATE DATABASE
+    //update databas
     await dbHelper.updateTodo(id, {
       'title': newtitle,
       'description': newDescription,
@@ -106,7 +105,7 @@ class HomeController extends GetxController {
     todo['dueDate'] = newDueDateString;
 
     if (newisDone) {
-      // Hapus dari list aktif dan muat ulang riwayat
+      // hapus dari home
       todolist.removeAt(index);
       await historyController.loadHistoryTodos();
 
@@ -114,11 +113,10 @@ class HomeController extends GetxController {
         'Diperbarui',
         'Aktivitas "$newtitle" telah dipindahkan ke Riwayat.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColors.neon,
+        backgroundColor: AppColors.background,
         colorText: AppColors.textLight,
       );
     } else {
-      // Jika tidak dipindahkan, hanya refresh list aktif
       todolist.refresh();
     }
   }

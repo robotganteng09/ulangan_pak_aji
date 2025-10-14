@@ -46,7 +46,7 @@ class DashboardWide extends StatelessWidget {
 class _NavDrawer extends StatelessWidget {
   final dashboardController = Get.find<DashboardController>();
 
-  _NavDrawer({super.key});
+  _NavDrawer();
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +73,6 @@ class _NavDrawer extends StatelessWidget {
           _drawerItem(icon: Icons.history, title: "History", index: 1),
           _drawerItem(icon: Icons.person, title: "Profile", index: 2),
           const Divider(color: Colors.grey, thickness: 0.3),
-          ListTile(
-            leading: const Icon(Icons.logout, color: Colors.redAccent),
-            title: const Text(
-              "Logout",
-              style: TextStyle(color: Colors.redAccent),
-            ),
-            onTap: () => Get.back(),
-          ),
         ],
       ),
     );
@@ -107,7 +99,7 @@ class _NavDrawer extends StatelessWidget {
         ),
         onTap: () {
           dashboardController.changeTab(index);
-          Get.back(); // tutup drawer
+          Get.back();
         },
       );
     });

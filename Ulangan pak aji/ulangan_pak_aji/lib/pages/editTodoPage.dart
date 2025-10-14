@@ -8,14 +8,20 @@ class Edittodopage extends StatelessWidget {
   Edittodopage({super.key});
 
   final controller = Get.find<ResponsiveController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
-        builder: (context, Constraints) {
-          controller.updatelayout(Constraints);
+        builder: (context, constraints) {
+          Future.delayed(Duration.zero, () {
+            controller.updatelayout(constraints);
+          });
+
           return Obx(
-            () => controller.ismobile.value ? EditTodoMobile() : Editwide(),
+            () => controller.ismobile.value
+                ? const EditTodoMobile()
+                : const Editwide(),
           );
         },
       ),

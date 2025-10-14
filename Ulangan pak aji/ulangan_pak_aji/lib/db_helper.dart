@@ -36,13 +36,13 @@ class DBHelper {
     );
   }
 
-  // Insert
+  //add
   Future<int> insertTodo(Map<String, dynamic> data) async {
     final client = await db;
     return await client.insert('todo', data);
   }
 
-  // Mark done
+  //finish
   Future<int> markAsDone(int id) async {
     final client = await db;
     return await client.update(
@@ -53,7 +53,7 @@ class DBHelper {
     );
   }
 
-  // Get pending todos
+  //Get pending todos
   Future<List<Map<String, dynamic>>> getPendingTodos() async {
     final client = await db;
     return await client.query(
@@ -75,27 +75,21 @@ class DBHelper {
     );
   }
 
-  // Get all
+  //get data
   Future<List<Map<String, dynamic>>> getTodos() async {
     final client = await db;
     return await client.query('todo', orderBy: 'id DESC');
   }
 
-  // Update
+  //Update
   Future<int> updateTodo(int id, Map<String, dynamic> data) async {
     final client = await db;
     return await client.update('todo', data, where: 'id = ?', whereArgs: [id]);
   }
 
-  // Delete
+  //Delete
   Future<int> deleteTodo(int id) async {
     final client = await db;
     return await client.delete('todo', where: 'id = ?', whereArgs: [id]);
-  }
-
-  // Clear all
-  Future<void> clearAll() async {
-    final client = await db;
-    await client.delete('todo');
   }
 }

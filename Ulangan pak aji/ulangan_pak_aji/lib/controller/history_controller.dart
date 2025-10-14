@@ -11,21 +11,18 @@ class HistoryController extends GetxController {
     loadHistoryTodos();
   }
 
-  // 🔹 Ambil todo yang sudah selesai dari database
+  //load history list
   Future<void> loadHistoryTodos() async {
     final data = await dbHelper.getCompletedTodos();
-    historyList.assignAll(data); // ✅ gunakan assignAll (bukan value = data)
+    historyList.assignAll(data);
   }
 
-  // 🔹 Hapus todo dari history (hapus permanen dari DB)
+  //delte history
   Future<void> deleteHistory(int id, String title) async {
     await dbHelper.deleteTodo(id);
-
-    // Buat salinan baru agar tidak kena "read-only" error
     final updatedList = List<Map<String, dynamic>>.from(historyList);
     updatedList.removeWhere((item) => item['id'] == id);
 
-    // Update observable dengan list baru
     historyList.assignAll(updatedList);
   }
 }

@@ -4,6 +4,7 @@ import 'package:ulangan_pak_aji/controller/date_controller.dart';
 import 'package:ulangan_pak_aji/controller/drop_down_controller.dart';
 import 'package:ulangan_pak_aji/controller/home_controller.dart';
 import 'package:ulangan_pak_aji/widgets/app_colors.dart';
+import 'package:ulangan_pak_aji/widgets/cardReusable.dart';
 import 'package:ulangan_pak_aji/widgets/textfieldReuse.dart';
 
 class AddtodoWide extends StatelessWidget {
@@ -64,19 +65,21 @@ class AddtodoWide extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 6),
+                        Container(margin: const EdgeInsets.only(top: 6)),
                         ReuseTextField(
                           label: 'judul',
                           controller: homeController.titleController,
                           isNUmber: false,
-                          fillColor: AppColors.textGrey.withOpacity(0.2),
-                          borderColor: Colors.transparent,
+                          fillColor: AppColors.background,
+                          borderColor: AppColors.neon,
                           textColor: AppColors.textLight,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 20),
+
+                  // Jarak antar kolom pakai Container
+                  Container(width: 20),
 
                   // Priority dropdown
                   Expanded(
@@ -92,13 +95,17 @@ class AddtodoWide extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 6),
+                        Container(margin: const EdgeInsets.only(top: 6)),
                         Obx(
                           () => Container(
                             height: 50,
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
-                              color: AppColors.textGrey.withOpacity(0.2),
+                              color: AppColors.background,
+                              border: Border.all(
+                                color: AppColors.neon,
+                                width: 1.5,
+                              ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: DropdownButton<String>(
@@ -115,9 +122,7 @@ class AddtodoWide extends StatelessWidget {
                                 Icons.keyboard_arrow_down_rounded,
                                 color: AppColors.neon,
                               ),
-                              dropdownColor: AppColors.textGrey.withOpacity(
-                                0.2,
-                              ),
+                              dropdownColor: AppColors.background,
                               items: dropdown.pilihan
                                   .map(
                                     (item) => DropdownMenuItem(
@@ -145,7 +150,8 @@ class AddtodoWide extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 25),
+              // Jarak antar bagian pakai Container margin
+              Container(margin: const EdgeInsets.only(top: 25)),
 
               // Description
               const Text(
@@ -156,20 +162,18 @@ class AddtodoWide extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 6),
+              Container(margin: const EdgeInsets.only(top: 6)),
               ReuseTextField(
                 label: 'deskripsi',
                 controller: homeController.descController,
                 isNUmber: false,
-
-                fillColor: AppColors.textGrey.withOpacity(0.2),
-                borderColor: Colors.transparent,
+                fillColor: AppColors.background,
+                borderColor: AppColors.neon,
                 textColor: AppColors.textLight,
               ),
 
-              const SizedBox(height: 25),
+              Container(margin: const EdgeInsets.only(top: 25)),
 
-              // Due date
               const Text(
                 "Due date",
                 style: TextStyle(
@@ -178,7 +182,7 @@ class AddtodoWide extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 6),
+              Container(margin: const EdgeInsets.only(top: 6)),
               ReuseTextField(
                 label: 'tanggal',
                 controller: dateC.dateController,
@@ -186,19 +190,22 @@ class AddtodoWide extends StatelessWidget {
                 readOnly: true,
                 onTap: () => dateC.pickDate(context),
                 hintText: "Select date",
-                fillColor: AppColors.textGrey.withOpacity(0.2),
-                borderColor: Colors.transparent,
+                fillColor: AppColors.background,
+                borderColor: AppColors.neon,
                 textColor: AppColors.textLight,
               ),
 
-              const SizedBox(height: 30),
+              Container(margin: const EdgeInsets.only(top: 30)),
 
               // Add Button
               Align(
                 alignment: Alignment.centerRight,
-                child: SizedBox(
+                child: Container(
                   width: screenWidth * 0.25,
                   height: 48,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.neon,

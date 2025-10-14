@@ -18,22 +18,8 @@ class ProfileWide extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
           child: Stack(
+            alignment: Alignment.center,
             children: [
-              // 🔹 Judul "Profile" kanan atas
-              const Positioned(
-                top: 0,
-                right: 0,
-                child: Text(
-                  "Profile",
-                  style: TextStyle(
-                    color: AppColors.neon,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              // 🔹 Isi Utama (dua kartu di tengah)
               Center(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -43,14 +29,12 @@ class ProfileWide extends StatelessWidget {
                         username: "Narendra / 20 / XI PPLG 2",
                         imagePath: "assets/image/naren.jpg",
                         subtext: "Kata kata hari ini",
-                        compact: true,
                       ),
                       SizedBox(width: 60, height: 40),
                       ProfileCard(
                         username: "Arsya / 9 / IX PPLG 2",
                         imagePath: "assets/image/arsya.jpg",
                         subtext: "Kata kata hari ini",
-                        compact: true,
                       ),
                     ];
 
@@ -67,18 +51,20 @@ class ProfileWide extends StatelessWidget {
                 ),
               ),
 
-              // 🔹 Tombol Logout kanan bawah
               Positioned(
                 bottom: 35,
-                right: 30,
-                child: SizedBox(
-                  width: 150,
-                  height: 45,
-                  child: CustomButton(
-                    text: "LOG OUT",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    onPressed: loginController.logout,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: SizedBox(
+                    width: 160,
+                    height: 45,
+                    child: CustomButton(
+                      text: "LOG OUT",
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      onPressed: loginController.logout,
+                    ),
                   ),
                 ),
               ),

@@ -7,7 +7,6 @@ import 'package:ulangan_pak_aji/pages/responsive home/home_wide.dart';
 class Homepage extends StatelessWidget {
   Homepage({super.key});
 
-  // ✅ Gunakan Get.put agar controller dibuat pertama kali
   final controller = Get.put(ResponsiveController());
 
   @override
@@ -15,12 +14,9 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // ✅ huruf kecil “constraints” (bukan Constraints)
           controller.updatelayout(constraints);
           return Obx(
-            () => controller.ismobile.value
-                ? const HomeMobile() // tambahkan const
-                : const HomeWide(), // tambahkan const
+            () => controller.ismobile.value ? HomeMobile() : HomeWide(),
           );
         },
       ),

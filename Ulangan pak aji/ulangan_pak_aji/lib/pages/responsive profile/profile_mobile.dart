@@ -18,7 +18,6 @@ class ProfilleMobile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // 🔹 Scrollable content
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
@@ -46,7 +45,6 @@ class ProfilleMobile extends StatelessWidget {
               ),
             ),
 
-            // 🔹 Tombol logout di tengah bawah
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: SizedBox(
