@@ -14,34 +14,28 @@ class ProfilleMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SafeArea(
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // 🔹 Header
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                "Profile",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.neon,
-                ),
-              ),
-            ),
-
-            // 🔹 Isi profil (scrollable)
+            // 🔹 Scrollable content
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 16,
+                ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
+                    SizedBox(height: 20),
                     ProfileCard(
                       username: "Narendra/20/XI PPLG 2",
                       imagePath: "assets/image/naren.jpg",
                       subtext: "Saya manusia, makan nasi",
                     ),
+                    SizedBox(height: 24),
                     ProfileCard(
                       username: "Arsya/9/IX PPLG 2",
                       imagePath: "assets/image/arsya.jpg",
@@ -52,12 +46,12 @@ class ProfilleMobile extends StatelessWidget {
               ),
             ),
 
-            // 🔹 Tombol logout
+            // 🔹 Tombol logout di tengah bawah
             Padding(
-              padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
+              padding: const EdgeInsets.only(bottom: 30),
               child: SizedBox(
-                width: double.infinity,
-                height: 42,
+                width: 160,
+                height: 45,
                 child: CustomButton(
                   text: "LOG OUT",
                   backgroundColor: Colors.red,

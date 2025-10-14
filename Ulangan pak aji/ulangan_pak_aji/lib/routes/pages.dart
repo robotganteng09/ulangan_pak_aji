@@ -76,7 +76,7 @@ class AppPage {
     ),
     GetPage(
       name: AppRoutes.ProfilleWide,
-      page: () => ProfilleWide(),
+      page: () => ProfileWide(),
       binding: Loginbinding(),
     ),
     GetPage(

@@ -123,6 +123,7 @@ class HomeMobile extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           // 🔹 Judul dan kategori
+                                          // 🔹 Judul dan kategori
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -142,11 +143,11 @@ class HomeMobile extends StatelessWidget {
                                                 ),
                                               ),
                                               Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 2,
-                                                    ),
+                                                padding: const EdgeInsets.symmetric(
+                                                  horizontal: 16,
+                                                  vertical:
+                                                      8, // 🔽 dikurangi sedikit agar proporsional
+                                                ),
                                                 decoration: BoxDecoration(
                                                   color: AppColors.neon
                                                       .withOpacity(0.15),
@@ -164,8 +165,10 @@ class HomeMobile extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 6),
 
+                                          const SizedBox(
+                                            height: 2,
+                                          ), // 🔽 jarak antar judul & deskripsi diperkecil
                                           // 🔹 Deskripsi
                                           Text(
                                             todo['description'] ?? '',
@@ -174,8 +177,10 @@ class HomeMobile extends StatelessWidget {
                                               color: AppColors.textGrey,
                                             ),
                                           ),
-                                          const SizedBox(height: 12),
 
+                                          const SizedBox(
+                                            height: 6,
+                                          ), // 🔼 jarak ke tanggal sedikit lebih besar biar tetap rapi
                                           // 🔹 Tanggal jatuh tempo
                                           Text(
                                             dueDate != null

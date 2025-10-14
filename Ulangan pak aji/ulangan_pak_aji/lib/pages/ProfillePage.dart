@@ -15,7 +15,7 @@ class Profillepage extends StatelessWidget {
         builder: (context, Constraints) {
           controller.updatelayout(Constraints);
           return Obx(
-            () => controller.ismobile.value ? ProfilleMobile() : ProfilleWide(),
+            () => controller.ismobile.value ? ProfilleMobile() : ProfileWide(),
           );
         },
       ),
